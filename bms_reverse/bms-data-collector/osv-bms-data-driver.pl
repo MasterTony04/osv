@@ -50,7 +50,7 @@ my $currentMultiplyingFactor = 3;
 
 # Open port
 my $port = Device::SerialPort->new( "/dev/ttyACM0", 0 )
-  or die "Could not open port: " . $!;
+  or die "Could not open serial port: " . $!;
 
 # Create path to temp files
 if ( !-d $pathToBmsFiles ) {
@@ -78,10 +78,35 @@ $port->write("01") or die "Initialization sequence: write failed.";
 my ( $count_in, $string_in );
 my ( $soc, @cellVoltage, @temperature, $current, $pwmToCharger,
 	$pwmToEngineController );
+
 my ( $soc_old, @cellVoltage_old, @temperature_old, $current_old, $pwmToCharger_old,
 	$pwmToEngineController_old );
+
+# Global variables initialization
 @cellVoltage = ();
 @temperature = ();
+@cellVoltage_old = ();
+@temperature_old = ();
+
+$soc = 0;
+$soc_old = 0;
+$current = 0;
+$current_old = 0;
+$pwmToCharger = 0;
+$pwmToCharger_old = 0;
+$pwmToEngineController = 0;
+$pwmToEngineController_old = 0;
+
+for(my $i = 0 ; $i < 4 ; $i++) {
+	$temperature[$i] = -1;
+	$temperature_old[$i] = -1;
+}
+
+for(my $i = 0 ; $i < 24 ; $i++) {
+	$cellVoltage[$i] = 0;
+	$cellVoltage_old[$i] = 0;
+}
+
 my $str = "";
 
 my ( $key, $value );
@@ -113,11 +138,13 @@ while (1) {
 					#TODO deal with boolean values: 2xx
 				}
 				case [ 1 .. 24 ] {
-					$cellVoltage[ $key - 1 ] = $value;
+					$cellVoltage[ $key - 1 ] = $value / 200;
 				}
 				case 74 {
 					if ( $value =~ /(\d)(\d\d)/ ) {
-						$temperature[$1] = $2;
+						$temperature[$1] = $2 + 0;
+					} elsif( $value =~ /(\d\d)/ ) {
+						$temperature[0] = $1 + 0;
 					}
 				}
 				case 84 {
@@ -182,8 +209,8 @@ sub updateValues {
 # @param File name.
 # @param Content to be written.
 sub writeToFile {
-	open(FILE, ">" . $pathToBmsFiles . "/" . $_[1]) or warn "Could not open " . $_[1] . ": " . $!;
-	print FILE $_[2];
+	open(FILE, ">" . $pathToBmsFiles . "/" . $_[0]) or warn "Could not open " . $_[0] . ": " . $!;
+	print FILE $_[1] . "\n";
 	close(FILE);
 }
 
