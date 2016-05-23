@@ -54,7 +54,8 @@ my $port = Device::SerialPort->new( "/dev/ttyACM0", 0 )
 
 # Create path to temp files
 if ( !-d $pathToBmsFiles ) {
-	make_path($pathToBmsFiles) or die "Could not create directory \"" . $pathToBmsFiles . "\".";
+	make_path($pathToBmsFiles)
+	  or die "Could not create directory \"" . $pathToBmsFiles . "\".";
 }
 
 # Configuration
@@ -77,33 +78,38 @@ $port->write("01") or die "Initialization sequence: write failed.";
 
 my ( $count_in, $string_in );
 my ( $soc, @cellVoltage, @temperature, $current, $pwmToCharger,
-	$pwmToEngineController );
+	$pwmToEngineController, $charging, $balancing );
 
-my ( $soc_old, @cellVoltage_old, @temperature_old, $current_old, $pwmToCharger_old,
-	$pwmToEngineController_old );
+my ( $soc_old, @cellVoltage_old, @temperature_old, $current_old,
+	$pwmToCharger_old,
+	$pwmToEngineController_old, $charging_old, $balancing_old );
 
 # Global variables initialization
-@cellVoltage = ();
-@temperature = ();
+@cellVoltage     = ();
+@temperature     = ();
 @cellVoltage_old = ();
 @temperature_old = ();
 
-$soc = 0;
-$soc_old = 0;
-$current = 0;
-$current_old = 0;
-$pwmToCharger = 0;
-$pwmToCharger_old = 0;
-$pwmToEngineController = 0;
+$soc                       = 0;
+$soc_old                   = 0;
+$current                   = 0;
+$current_old               = 0;
+$pwmToCharger              = 0;
+$pwmToCharger_old          = 0;
+$pwmToEngineController     = 0;
 $pwmToEngineController_old = 0;
+$charging                  = -1;
+$charging_old              = -1;
+$balancing                 = -1;
+$balancing_old             = -1;
 
-for(my $i = 0 ; $i < 4 ; $i++) {
-	$temperature[$i] = -1;
+for ( my $i = 0 ; $i < 4 ; $i++ ) {
+	$temperature[$i]     = -1;
 	$temperature_old[$i] = -1;
 }
 
-for(my $i = 0 ; $i < 24 ; $i++) {
-	$cellVoltage[$i] = 0;
+for ( my $i = 0 ; $i < 24 ; $i++ ) {
+	$cellVoltage[$i]     = 0;
 	$cellVoltage_old[$i] = 0;
 }
 
@@ -134,8 +140,16 @@ while (1) {
 					elsif ( $value >= 300 ) {
 						$pwmToCharger = $value - 300;
 					}
+					elsif ( $value =~ /2(\d)(\d)/ ) {
+						if ( $1 == 1 ) {
+							$charging = $2;
+						}
+						elsif ( $1 == 2 ) {
+							$balancing = $2;
+						}
+					}
 
-					#TODO deal with boolean values: 2xx
+					#TODO deal with other boolean values: 2xx
 				}
 				case [ 1 .. 24 ] {
 					$cellVoltage[ $key - 1 ] = $value / 200;
@@ -143,7 +157,8 @@ while (1) {
 				case 74 {
 					if ( $value =~ /(\d)(\d\d)/ ) {
 						$temperature[$1] = $2 + 0;
-					} elsif( $value =~ /(\d\d)/ ) {
+					}
+					elsif ( $value =~ /(\d\d)/ ) {
 						$temperature[0] = $1 + 0;
 					}
 				}
@@ -157,59 +172,72 @@ while (1) {
 		}
 
 		$str = "";
-		
+
 		&updateValues();
 	}
 }
 
-
 sub updateValues {
-	
+
 	# Soc
-	if($soc != $soc_old) {
-		&writeToFile("soc", $soc);
+	if ( $soc != $soc_old ) {
+		&writeToFile( "soc", $soc );
 		$soc_old = $soc;
 	}
-	
+
 	# @cellVoltage
-	for(my $i = 0 ; $i < 24 ; $i++ ) {
-		if($cellVoltage[$i] != $cellVoltage_old[$i]) {
-			&writeToFile("cell_" . ($i < 10 ? "0" : "") . $i . "_voltage", $cellVoltage[$i]);
+	for ( my $i = 0 ; $i < 24 ; $i++ ) {
+		if ( $cellVoltage[$i] != $cellVoltage_old[$i] ) {
+			&writeToFile( "cell_" . ( $i < 10 ? "0" : "" ) . $i . "_voltage",
+				$cellVoltage[$i] );
 			$cellVoltage_old[$i] = $cellVoltage[$i];
 		}
 	}
-	
+
 	# @temperature
-	for(my $i = 0 ; $i < 4 ; $i++ ) {
-		if($temperature[$i] != $temperature_old[$i]) {
-			&writeToFile("temperature_" . $i , $temperature[$i]);
+	for ( my $i = 0 ; $i < 4 ; $i++ ) {
+		if ( $temperature[$i] != $temperature_old[$i] ) {
+			&writeToFile( "temperature_" . $i, $temperature[$i] );
 			$temperature_old[$i] = $temperature[$i];
 		}
 	}
-	
+
 	# $current
-	if($current != $current_old) {
-		&writeToFile("current", $current);
+	if ( $current != $current_old ) {
+		&writeToFile( "current", $current );
 		$current_old = $current;
 	}
-	
+
 	# $pwmToCharger
-	if($pwmToCharger != $pwmToCharger_old) {
-		&writeToFile("pwm_to_charger", $pwmToCharger);
+	if ( $pwmToCharger != $pwmToCharger_old ) {
+		&writeToFile( "pwm_to_charger", $pwmToCharger );
 		$pwmToCharger_old = $pwmToCharger;
 	}
-	
+
 	# $pwmToEngineController
-	if($pwmToEngineController != $pwmToEngineController_old) {
-		&writeToFile("pwm_to_engine_controller", $pwmToEngineController);
+	if ( $pwmToEngineController != $pwmToEngineController_old ) {
+		&writeToFile( "pwm_to_engine_controller", $pwmToEngineController );
 		$pwmToEngineController_old = $pwmToEngineController;
+	}
+
+	# $charging
+	if ( $charging != $charging_old ) {
+		&writeToFile( "charging", $charging );
+		$charging_old = $charging;
+	}
+
+	# $balancing
+	if ( $balancing != $balancing_old ) {
+		&writeToFile( "balancing", $balancing );
+		$balancing_old = $balancing;
 	}
 }
 
 # @param File name.
 # @param Content to be written.
 sub writeToFile {
-	open(FILE, ">" . $pathToBmsFiles . "/" . $_[0]) or warn "Could not open " . $_[0] . ": " . $!;
+	open( FILE, ">" . $pathToBmsFiles . "/" . $_[0] )
+	  or warn "Could not open " . $_[0] . ": " . $!;
 	print FILE $_[1] . "\n";
 	close(FILE);
 }
