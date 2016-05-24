@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -56,6 +57,12 @@ public class OptionFrame extends JFrame {
 		JLabel pathToFiles = new JLabel("Path to BMS data files: ");
 		userInput = new JTextField(20);
 		userInput.setText(App.PATH_TO_BMS_FILES);
+		userInput.addActionListener(new AbstractAction() {
+			private static final long serialVersionUID = 6141452036271520013L;
+			public void actionPerformed(ActionEvent e) {
+				clickedOnOK();
+			}
+		});
 		centerP.add(pathToFiles);
 		centerP.add(userInput);
 		JPanel bottomPanel = new JPanel();
@@ -100,7 +107,6 @@ public class OptionFrame extends JFrame {
 	}
 
 	private void loadConf() {
-		System.out.println("Loading conf!");
 		String confPath = App.PATH + App.SEPARATOR + CONF_FILE_NAME;
 		if(new File(confPath).exists()) {
 			for(String s : App.readFile(confPath).split("\n")) {
