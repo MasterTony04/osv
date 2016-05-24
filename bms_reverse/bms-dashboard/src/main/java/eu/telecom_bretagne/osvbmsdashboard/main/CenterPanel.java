@@ -61,11 +61,13 @@ public class CenterPanel extends JPanel {
 		cellVoltagePanel.setData(DataPanel.CELL_16_VOLTAGE, 0);
 		cellVoltagePanel.setData(DataPanel.CELL_24_VOLTAGE, 0);
 		add(cellVoltagePanel);
-		batteryStatus = new DataPanel(2, 2, "Overall battery status");
+		batteryStatus = new DataPanel(3, 2, "Overall battery status");
 		batteryStatus.setData(DataPanel.BATTERY_CURRENT, 0);
 		batteryStatus.setData(DataPanel.BATTERY_VOLTAGE, 0);
 		batteryStatus.setData(DataPanel.BATTERY_CHARGING, 0);
 		batteryStatus.setData(DataPanel.BATTERY_BALANCING, 0);
+		batteryStatus.setData(DataPanel.PWM_TO_CHARGER, 0);
+		batteryStatus.setData(DataPanel.PWM_TO_ENGINE_CONTROLLER, 0);
 		add(batteryStatus);
 	}
 }

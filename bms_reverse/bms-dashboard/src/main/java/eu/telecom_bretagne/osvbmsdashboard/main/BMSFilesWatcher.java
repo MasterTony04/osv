@@ -132,98 +132,122 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 		if (fileName.equals(CELL_00_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_01_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_01_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_02_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_02_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_03_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_03_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_04_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_04_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_05_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_05_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_06_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_06_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_07_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_07_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_08_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_08_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_09_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_09_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_10_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_10_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_11_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_11_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_12_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_12_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_13_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_13_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_14_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_14_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_15_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_15_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_16_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_16_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_17_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_17_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_18_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_18_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_19_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_19_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_20_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_20_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_21_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_21_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_22_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_22_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_23_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_23_VOLTAGE)) {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_24_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CHARGING)) {
 			mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_CHARGING,
@@ -233,15 +257,14 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 			mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_CURRENT,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
 		}
-		// TODO Add panels for this data
-		// if(s.equals(PWM_TO_CHARGER)) {
-		// mw.CENTER_OR_EASTPanel.PANEL_NAME.setData(DataPanel.PWM_TO_CHARGER,
-		// Float.parseFloat(readFirstLineInFile(path)));
-		// }
-		// if(s.equals(PWM_TO_ENGINE_CONTROLLER)) {
-		// mw.CENTER_OR_EASTPanel.PANEL_NAME.setData(DataPanel.PWM_TO_ENGINE_CONTROLLER,
-		// Float.parseFloat(readFirstLineInFile(path)));
-		// }
+		if (fileName.equals(PWM_TO_CHARGER)) {
+			mw.centerPanel.batteryStatus.setData(DataPanel.PWM_TO_CHARGER,
+					Float.parseFloat(readFirstLineInFile(pathToFile)));
+		}
+		if (fileName.equals(PWM_TO_ENGINE_CONTROLLER)) {
+			mw.centerPanel.batteryStatus.setData(DataPanel.PWM_TO_ENGINE_CONTROLLER,
+					Float.parseFloat(readFirstLineInFile(pathToFile)));
+		}
 		if (fileName.equals(SOC)) {
 			mw.eastPanel.socDisplay.updateDisplay(Integer.parseInt(readFirstLineInFile(pathToFile)));
 		}
@@ -263,6 +286,37 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 		}
 	}
 
+	private void updateBatteryOverallVoltage() {
+		float bv = mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_01_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_02_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_03_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_04_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_05_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_06_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_07_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_08_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_09_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_10_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_11_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_12_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_13_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_14_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_15_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_16_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_17_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_18_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_19_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_20_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_21_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_22_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_23_VOLTAGE);
+		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_24_VOLTAGE);
+		mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_VOLTAGE,
+				bv);
+		
+		// TODO Update min max average cells.
+	}
+	
 	private void lookForFiles() {
 		for (String s : files) {
 			String path = App.PATH_TO_BMS_FILES + App.SEPARATOR + s;

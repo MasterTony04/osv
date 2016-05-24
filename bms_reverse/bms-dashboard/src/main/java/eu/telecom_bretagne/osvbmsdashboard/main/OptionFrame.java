@@ -56,7 +56,6 @@ public class OptionFrame extends JFrame {
 		JPanel centerP = new JPanel();
 		JLabel pathToFiles = new JLabel("Path to BMS data files: ");
 		userInput = new JTextField(20);
-		userInput.setText(App.PATH_TO_BMS_FILES);
 		userInput.addActionListener(new AbstractAction() {
 			private static final long serialVersionUID = 6141452036271520013L;
 			public void actionPerformed(ActionEvent e) {
@@ -85,6 +84,7 @@ public class OptionFrame extends JFrame {
 		rootPanel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		loadConf();
+		userInput.setText(App.PATH_TO_BMS_FILES);
 	}
 
 	protected void clickedOnOK() {

@@ -71,6 +71,8 @@ public class DataPanel extends JPanel {
 	public static final String BATTERY_VOLTAGE = "Battery voltage (V): ";
 	public static final String BATTERY_CHARGING = "Charging: ";
 	public static final String BATTERY_BALANCING = "Balancing: ";
+	public static final String PWM_TO_CHARGER = "PWM to Charger (% duty-cycle): ";
+	public static final String PWM_TO_ENGINE_CONTROLLER = "PWM to Engine Controller (% duty-cycle): ";
 
 	private Map<String, DataPanel.DataField> dataFields = new Hashtable<String, DataPanel.DataField>();
 
@@ -116,5 +118,13 @@ public class DataPanel extends JPanel {
 		public void setValue(float value) {
 			this.valueL.setText(Float.toString(value));
 		}
+		
+		public float getFieldValue() {
+			return Float.parseFloat(valueL.getText());
+		}
+	}
+
+	public float getData(String fieldName) {
+		return dataFields.get(fieldName).getFieldValue();
 	}
 }
