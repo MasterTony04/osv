@@ -301,7 +301,7 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 			service.close();
 
 		} catch (NoSuchFileException e) {
-			mw.displayError("Path to BMS files does not exist!\n"
+			mw.displayError("Path to BMS files does not exist!\n" + "Path is: " + App.PATH_TO_BMS_FILES + "\n"
 					+ "Please make sure that the path exists and restart the application.");
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -317,22 +317,17 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 
 	@Override
 	protected void process(List<String> fileName) {
-		System.out.println("Processing !");
-
 		for (String s : fileName) {
 			if (s == null) {
 				return;
 			}
-			System.out.println("Still processing…");
 			String path = App.PATH_TO_BMS_FILES + App.SEPARATOR + s;
-			System.out.println("Path = " + path);
 			if ((new File(path)).exists()) {
-
 				updateFieldContent(s, path);
 			}
 		}
 	}
-	
+
 	public void stopWatching() {
 		this.stop = true;
 	}

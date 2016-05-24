@@ -48,6 +48,8 @@ public class MainWindow extends JFrame {
 	CenterPanel centerPanel;
 	EastPanel eastPanel;
 
+	OptionFrame optionframe;
+	
 	private BMSFilesWatcher bmsFilesWatcher;
 
 	public MainWindow() {
@@ -85,6 +87,8 @@ public class MainWindow extends JFrame {
 		setTitle(App.APPLICATION_NAME);
 		pack();
 		
+		optionframe = new OptionFrame(this);
+		
 		bmsFilesWatcher = new BMSFilesWatcher(this);
 		bmsFilesWatcher.execute();
 	}
@@ -117,7 +121,7 @@ public class MainWindow extends JFrame {
 		JMenuItem options = new JMenuItem("Options");
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				optionframe.setVisible(true);
 			}
 		});
 
@@ -140,5 +144,11 @@ public class MainWindow extends JFrame {
 
 	public void displayError(String string) {
 		JOptionPane.showMessageDialog(this, string, "", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void restartBmsFileWatcher() {
+		bmsFilesWatcher.stopWatching();
+		bmsFilesWatcher = new BMSFilesWatcher(this);
+		bmsFilesWatcher.execute();
 	}
 }

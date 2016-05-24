@@ -20,7 +20,12 @@
 
 package eu.telecom_bretagne.osvbmsdashboard.main;
 
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.SwingUtilities;
 
@@ -33,8 +38,9 @@ public class App {
 	public static final String SEPARATOR = System.getProperty("file.separator");
 	public static final String PATH = System.getProperty("user.dir");
 	public static final String APPLICATION_NAME = "OSV BMS Dashboard v0.1";
+	public static final String TMP = System.getProperty("java.io.tmpdir");
 	
-	public static String PATH_TO_BMS_FILES = "/tmp/osv-bms";
+	public static String PATH_TO_BMS_FILES = TMP + SEPARATOR + "osv-bms";
 	
 	/**
 	 * @param args
@@ -45,5 +51,44 @@ public class App {
 				(new MainWindow()).display();
 			}
 		});
+	}
+	
+	public static String readFile(String pathToFile) {
+		BufferedReader br = null;
+		StringBuffer content = new StringBuffer();
+		try {
+			br = new BufferedReader(new FileReader(new File(pathToFile)));
+			String s;
+			while((s = br.readLine()) != null) {
+				content.append(s);
+				content.append("\n");
+			}
+		} catch (IOException e) {
+			System.out.println(e.toString());
+		} finally {
+			if(br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {}
+			}
+		}
+		
+		return content.toString();
+	}
+	
+	public static void writeToFile(String pathToFile, String toWrite) {
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new PrintWriter(new File(pathToFile)));
+			bw.write(toWrite);
+		}  catch (IOException e) {
+			System.out.println(e.toString());
+		} finally {
+			if(bw != null) {
+				try {
+					bw.close();
+				} catch (IOException e) {}
+			}
+		}
 	}
 }
