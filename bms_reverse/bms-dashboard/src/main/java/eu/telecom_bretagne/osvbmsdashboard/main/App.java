@@ -43,4 +43,8 @@ public class App {
 		});
 	}
 
+	public static String getImagePath(String relativePathToFile) {
+		return Thread.currentThread().getContextClassLoader()
+				.getResource(relativePathToFile).getPath();
+	}
 }

@@ -51,28 +51,34 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowListener() {
 
-			public void windowOpened(WindowEvent e) {}
+			public void windowOpened(WindowEvent e) {
+			}
 
-			public void windowClosing(WindowEvent e) {}
-
-			public void windowClosed(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
 				onExit();
 			}
 
-			public void windowIconified(WindowEvent e) {}
+			public void windowClosed(WindowEvent e) {
+			}
 
-			public void windowDeiconified(WindowEvent e) {}
+			public void windowIconified(WindowEvent e) {
+			}
 
-			public void windowActivated(WindowEvent e) {}
+			public void windowDeiconified(WindowEvent e) {
+			}
 
-			public void windowDeactivated(WindowEvent e) {}
+			public void windowActivated(WindowEvent e) {
+			}
+
+			public void windowDeactivated(WindowEvent e) {
+			}
 		});
 		setMinimumSize(new Dimension(320, 240));
 		rootPane = (JPanel) getContentPane();
 		rootPane.setLayout(new BorderLayout());
 		makeMenu();
 		makeMainPanel();
-		
+
 		setTitle(App.APPLICATION_NAME);
 		pack();
 	}
@@ -83,19 +89,19 @@ public class MainWindow extends JFrame {
 	}
 
 	private void makeCenterPanel() {
-		centerPanel = new CenterPanel();
+		centerPanel = new CenterPanel(this);
 		rootPane.add(centerPanel, BorderLayout.CENTER);
 	}
-	
+
 	private void makeEastPanel() {
-		eastPanel = new EastPanel();
+		eastPanel = new EastPanel(this);
 		rootPane.add(eastPanel, BorderLayout.EAST);
 	}
 
 	private void makeMenu() {
 		menuBar = new JMenuBar();
-		JMenu file = new JMenu("Fichier");
-		JMenuItem quit = new JMenuItem("Quitter");
+		JMenu file = new JMenu("File");
+		JMenuItem quit = new JMenuItem("Quit");
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onExit();
@@ -108,11 +114,11 @@ public class MainWindow extends JFrame {
 				// TODO Auto-generated method stub
 			}
 		});
-		
+
 		file.add(options);
 		file.addSeparator();
 		file.add(quit);
-		
+
 		menuBar.add(file);
 		rootPane.add(menuBar, BorderLayout.NORTH);
 	}

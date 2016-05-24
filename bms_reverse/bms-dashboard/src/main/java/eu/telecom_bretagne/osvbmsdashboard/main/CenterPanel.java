@@ -29,5 +29,10 @@ import javax.swing.JPanel;
 public class CenterPanel extends JPanel {
 
 	private static final long serialVersionUID = -5398304583015651658L;
+	private MainWindow mw;
+	
+	public CenterPanel(MainWindow mw) {
+		this.mw = mw;
+	}
 
 }

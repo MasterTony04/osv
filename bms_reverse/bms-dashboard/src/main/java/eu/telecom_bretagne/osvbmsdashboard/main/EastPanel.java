@@ -20,6 +20,7 @@
 
 package eu.telecom_bretagne.osvbmsdashboard.main;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 /**
@@ -29,5 +30,25 @@ import javax.swing.JPanel;
 public class EastPanel extends JPanel {
 
 	private static final long serialVersionUID = 7594905098655010108L;
+	private StateOfChargeDisplay socDisplay;
+	private DataPanel cellVoltagePanel;
+	private DataPanel temperaturesPanel;
 
+	public EastPanel(MainWindow mw) {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		socDisplay = new StateOfChargeDisplay(mw);
+		add(socDisplay);
+		cellVoltagePanel = new DataPanel(1, 3, "Cells voltages");
+		cellVoltagePanel.setData(DataPanel.MIN_CELL_VOLTAGE, 0);
+		cellVoltagePanel.setData(DataPanel.MAX_CELL_VOLTAGE, 0);
+		cellVoltagePanel.setData(DataPanel.AVG_CELL_VOLTAGE, 0);
+		add(cellVoltagePanel);
+		temperaturesPanel = new DataPanel(2, 2, "Temperatures");
+		temperaturesPanel.setData(DataPanel.TEMPERATURE_0, 0);
+		temperaturesPanel.setData(DataPanel.TEMPERATURE_1, 0);
+		temperaturesPanel.setData(DataPanel.TEMPERATURE_2, 0);
+		temperaturesPanel.setData(DataPanel.TEMPERATURE_3, 123);
+		add(temperaturesPanel);
+	}
+	
 }
