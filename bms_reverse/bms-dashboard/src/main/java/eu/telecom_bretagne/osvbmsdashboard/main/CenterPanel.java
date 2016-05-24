@@ -30,8 +30,8 @@ import javax.swing.JPanel;
 public class CenterPanel extends JPanel {
 
 	private static final long serialVersionUID = -5398304583015651658L;
-	private DataPanel cellVoltagePanel;
-	private DataPanel batteryStatus;
+	DataPanel cellVoltagePanel;
+	DataPanel batteryStatus;
 	
 	public CenterPanel() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

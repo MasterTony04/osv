@@ -20,6 +20,8 @@
 
 package eu.telecom_bretagne.osvbmsdashboard.main;
 
+import java.net.URL;
+
 import javax.swing.SwingUtilities;
 
 /**
@@ -32,6 +34,8 @@ public class App {
 	public static final String PATH = System.getProperty("user.dir");
 	public static final String APPLICATION_NAME = "OSV BMS Dashboard v0.1";
 	
+	public static String PATH_TO_BMS_FILES = "/tmp/osv-bms";
+	
 	/**
 	 * @param args
 	 */
@@ -41,10 +45,5 @@ public class App {
 				(new MainWindow()).display();
 			}
 		});
-	}
-
-	public static String getImagePath(String relativePathToFile) {
-		return Thread.currentThread().getContextClassLoader()
-				.getResource(relativePathToFile).getPath();
 	}
 }

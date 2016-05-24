@@ -22,3 +22,25 @@ for (my $j = 1 ; $j < 9 ; $j++) {
 	}
 }
 
+print "\n\n";
+
+opendir(DIR, "/home/guillaumelg/osv-bms");
+my @files = readdir(DIR);
+closedir(DIR);
+
+@files = sort { lc($a) cmp lc($b) } @files;
+
+for (my $i = 0 ; $i < @files ; $i++) {
+	print "public static final String " . uc($files[$i]) . " = \"" . $files[$i] . "\";\n";
+}
+
+foreach (@files) {
+	print "files.add(" . uc($_) . ");\n";
+}
+
+print "\n\n";
+
+foreach (@files) {
+	print "if(s.equals(" . uc($_) . ")) {\n\tmw.CENTER_OR_EASTPanel.PANEL_NAME.setData(DataPanel." . uc($_) . ", Float.parseFloat(readFirstLineInFile(path)));\n}\n";
+}
+

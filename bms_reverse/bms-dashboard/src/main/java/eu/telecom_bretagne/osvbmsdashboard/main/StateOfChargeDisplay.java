@@ -49,12 +49,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
@@ -68,7 +68,6 @@ public class StateOfChargeDisplay extends JPanel {
 	JLabel label;
 	DisplayImage img;
 
-	SwingWorker<Void, Integer> updater = null;
 	MainWindow mw;
 
 	public StateOfChargeDisplay(MainWindow mw) {
@@ -96,47 +95,15 @@ public class StateOfChargeDisplay extends JPanel {
 	 * 
 	 * @param value
 	 */
-	public void updateDisplay(int value) {
-		this.value = value;
-		label.setText(LABELSTART + this.value);
-	}
-
-	public void startUpdating() {
-	
-		updater = new SwingWorker<Void, Integer>() {
-			@Override
-			protected Void doInBackground() throws Exception {
-				Thread.sleep(1234);
-				
-					// FIXME replace that with watch service.
-					publish(11);
-					return null;
-				
-
-				
-			}
-
-			@Override
-			protected void process(List<Integer> soc) {
-				if (soc.get(soc.size() - 1) >= 0) {
-					value = soc.get(soc.size() - 1);
-					img.updateValue(value);
-					label.setText(LABELSTART + value + "%");
-				} else {
-					img.updateValue(0);
-					label.setText(LABELSTART + UNKNOWN);
-					value = -1;
-				}
-			}
-		};
-		updater.execute();
-	}
-
-	public void stopUpdating() {
-
-		if (updater != null) {
-			updater.cancel(true);
-			updater = null;
+	public void updateDisplay(int soc) {
+		if (soc >= 0 && soc <= 100) {
+			value = soc;
+			img.updateValue(value);
+			label.setText(LABELSTART + value + "%");
+		} else {
+			img.updateValue(0);
+			label.setText(LABELSTART + UNKNOWN);
+			value = -1;
 		}
 	}
 
@@ -151,9 +118,10 @@ public class StateOfChargeDisplay extends JPanel {
 		public DisplayImage(MainWindow mw) {
 			this.mw = mw;
 			try {
-				background = ImageIO.read(new File(App.getImagePath("Counter_background.png")));
-				needle = ImageIO.read(new File(App.getImagePath("Needle.png")));
+				background = ImageIO.read(getClass().getResourceAsStream("/Counter_background.png"));
+				needle = ImageIO.read(getClass().getResourceAsStream("/Needle.png"));
 			} catch (IOException e) {
+				System.err.println("Could not load images!!");
 				background = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
 				needle = null;
 			}

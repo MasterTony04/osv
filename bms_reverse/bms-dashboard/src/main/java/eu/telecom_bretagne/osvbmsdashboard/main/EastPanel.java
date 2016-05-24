@@ -30,9 +30,9 @@ import javax.swing.JPanel;
 public class EastPanel extends JPanel {
 
 	private static final long serialVersionUID = 7594905098655010108L;
-	private StateOfChargeDisplay socDisplay;
-	private DataPanel cellVoltagePanel;
-	private DataPanel temperaturesPanel;
+	StateOfChargeDisplay socDisplay;
+	DataPanel cellVoltagePanel;
+	DataPanel temperaturesPanel;
 
 	public EastPanel(MainWindow mw) {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -50,5 +50,4 @@ public class EastPanel extends JPanel {
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_3, 0);
 		add(temperaturesPanel);
 	}
-	
 }

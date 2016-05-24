@@ -31,6 +31,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -44,8 +45,10 @@ public class MainWindow extends JFrame {
 	JPanel rootPane;
 	JMenuBar menuBar;
 
-	private CenterPanel centerPanel;
-	private EastPanel eastPanel;
+	CenterPanel centerPanel;
+	EastPanel eastPanel;
+
+	private BMSFilesWatcher bmsFilesWatcher;
 
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -81,6 +84,9 @@ public class MainWindow extends JFrame {
 
 		setTitle(App.APPLICATION_NAME);
 		pack();
+		
+		bmsFilesWatcher = new BMSFilesWatcher(this);
+		bmsFilesWatcher.execute();
 	}
 
 	private void makeMainPanel() {
@@ -127,7 +133,12 @@ public class MainWindow extends JFrame {
 		System.exit(0);
 	}
 
-	public void display() {
+	public MainWindow display() {
 		setVisible(true);
+		return this;
+	}
+
+	public void displayError(String string) {
+		JOptionPane.showMessageDialog(this, string, "", JOptionPane.ERROR_MESSAGE);
 	}
 }
