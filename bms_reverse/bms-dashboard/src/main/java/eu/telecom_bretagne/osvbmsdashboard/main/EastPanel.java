@@ -38,7 +38,7 @@ public class EastPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		socDisplay = new StateOfChargeDisplay(mw);
 		add(socDisplay);
-		cellVoltagePanel = new DataPanel(1, 3, "Cells voltages");
+		cellVoltagePanel = new DataPanel(3, 1, "Cells voltages");
 		cellVoltagePanel.setData(DataPanel.MIN_CELL_VOLTAGE, 0);
 		cellVoltagePanel.setData(DataPanel.MAX_CELL_VOLTAGE, 0);
 		cellVoltagePanel.setData(DataPanel.AVG_CELL_VOLTAGE, 0);
@@ -47,7 +47,7 @@ public class EastPanel extends JPanel {
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_0, 0);
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_1, 0);
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_2, 0);
-		temperaturesPanel.setData(DataPanel.TEMPERATURE_3, 123);
+		temperaturesPanel.setData(DataPanel.TEMPERATURE_3, 0);
 		add(temperaturesPanel);
 	}
 	

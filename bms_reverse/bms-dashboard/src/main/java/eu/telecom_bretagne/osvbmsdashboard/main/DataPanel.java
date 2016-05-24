@@ -66,6 +66,7 @@ public class DataPanel extends JPanel {
 	public static final String CELL_21_VOLTAGE = "Cell 21 voltage (V): ";
 	public static final String CELL_22_VOLTAGE = "Cell 22 voltage (V): ";
 	public static final String CELL_23_VOLTAGE = "Cell 23 voltage (V): ";
+	public static final String CELL_24_VOLTAGE = "Cell 24 voltage (V): ";
 	public static final String BATTERY_CURRENT = "Battery current (A): ";
 	public static final String BATTERY_VOLTAGE = "Battery voltage (V): ";
 	public static final String BATTERY_CHARGING = "Charging: ";

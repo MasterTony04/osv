@@ -89,7 +89,7 @@ public class MainWindow extends JFrame {
 	}
 
 	private void makeCenterPanel() {
-		centerPanel = new CenterPanel(this);
+		centerPanel = new CenterPanel();
 		rootPane.add(centerPanel, BorderLayout.CENTER);
 	}
 
