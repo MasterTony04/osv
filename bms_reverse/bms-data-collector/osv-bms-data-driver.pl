@@ -56,6 +56,8 @@ my $port = Device::SerialPort->new( "/dev/ttyACM0", 0 )
 if ( !-d $pathToBmsFiles ) {
 	make_path($pathToBmsFiles)
 	  or die "Could not create directory \"" . $pathToBmsFiles . "\".";
+} else {
+	die "Path to BMS files already exists! Please use a non existing directory.";
 }
 
 # Configuration
@@ -72,9 +74,10 @@ $SIG{INT} = sub {
 	$port->write("00\n");
 	$port->close() or warn "Failed to close port: " . $!;
 	undef $port;    # Frees object memory.
+	rmtree($pathToBmsFiles);
 };
 
-$port->write("01") or die "Initialization sequence: write failed.";
+$port->write("01") or (File::Path::rmtree($pathToBmsFiles) && die "Initialization sequence: write failed.");
 
 my ( $count_in, $string_in );
 my ( $soc, @cellVoltage, @temperature, $current, $pwmToCharger,
