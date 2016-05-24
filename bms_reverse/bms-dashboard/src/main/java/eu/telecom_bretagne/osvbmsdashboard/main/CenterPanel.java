@@ -20,27 +20,14 @@
 
 package eu.telecom_bretagne.osvbmsdashboard.main;
 
-import javax.swing.SwingUtilities;
+import javax.swing.JPanel;
 
 /**
  * @author guillaumelg
  *
  */
-public class App {
+public class CenterPanel extends JPanel {
 
-	public static final String SEPARATOR = System.getProperty("file.separator");
-	public static final String PATH = System.getProperty("user.dir");
-	public static final String APPLICATION_NAME = "OSV BMS Dashboard v0.1";
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				(new MainWindow()).display();
-			}
-		});
-	}
+	private static final long serialVersionUID = -5398304583015651658L;
 
 }
