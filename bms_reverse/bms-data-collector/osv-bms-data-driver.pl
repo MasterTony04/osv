@@ -42,7 +42,7 @@ use strict;
 use warnings;
 
 use Device::SerialPort qw( :PARAM :STAT 0.07 );
-use File::Path qw(make_path);
+use File::Path qw(make_path remove_tree);
 use Switch;
 
 my $pathToBmsFiles           = "/tmp/osv-bms";
@@ -74,7 +74,7 @@ $SIG{INT} = sub {
 	$port->write("00\n");
 	$port->close() or warn "Failed to close port: " . $!;
 	undef $port;    # Frees object memory.
-	rmtree($pathToBmsFiles);
+	remove_tree($pathToBmsFiles) && print "Removed temp files.\n";
 };
 
 $port->write("01") or (File::Path::rmtree($pathToBmsFiles) && die "Initialization sequence: write failed.");
