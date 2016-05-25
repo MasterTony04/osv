@@ -71,8 +71,8 @@ public class DataPanel extends JPanel {
 	public static final String BATTERY_VOLTAGE = "Battery voltage (V): ";
 	public static final String BATTERY_CHARGING = "Charging: ";
 	public static final String BATTERY_BALANCING = "Balancing: ";
-	public static final String PWM_TO_CHARGER = "PWM to Charger (% duty-cycle): ";
-	public static final String PWM_TO_ENGINE_CONTROLLER = "PWM to Engine Controller (% duty-cycle): ";
+	public static final String PWM_TO_CHARGER = "<html>PWM to Charger<br />(% duty-cycle): </html>";
+	public static final String PWM_TO_ENGINE_CONTROLLER = "<html>PWM to Engine Controller<br />(% duty-cycle): </html>";
 
 	private Map<String, DataPanel.DataField> dataFields = new Hashtable<String, DataPanel.DataField>();
 

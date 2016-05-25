@@ -43,7 +43,7 @@ public class EastPanel extends JPanel {
 		cellVoltagePanel.setData(DataPanel.MAX_CELL_VOLTAGE, 0);
 		cellVoltagePanel.setData(DataPanel.AVG_CELL_VOLTAGE, 0);
 		add(cellVoltagePanel);
-		temperaturesPanel = new DataPanel(2, 2, "Temperatures");
+		temperaturesPanel = new DataPanel(4, 1, "Temperatures");
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_0, 0);
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_1, 0);
 		temperaturesPanel.setData(DataPanel.TEMPERATURE_2, 0);
