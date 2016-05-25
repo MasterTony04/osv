@@ -1,0 +1,61 @@
+======================
+osv-bms-data-driver.pl
+======================
+
+DESCRIPTION
+-----------
+
+This program intends to work as a driver to decode the OSV's BMS serial protocol
+and to provide the BMS's data in files. The files are placed in "/tmp/osv-bms".
+
+The protocol specification is available at
+<https://github.com/telecombretagne/osv/blob/master/bms_reverse/bms_reverse.html>.
+Not all the data has been decoded yet, so some information may be missing (such
+as warning and error status…).
+
+LICENSE
+-------
+
+Copyright 2016 Institut Mines-Télécom
+
+osv-bms-data-driver.pl is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+osv-bms-data-driver.pl is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+License for more details.
+
+You should have received a copy of the GNU General Public License
+along with osv-bms-data-driver.pl. If not, see <http://www.gnu.org/licenses/>.
+
+HOW TO
+------
+
+Make sure that the BMS is plugged-in and that the CDC_ACM driver has detected
+it.
+Make the script "osv-bms-data-driver.pl" executable and run it.
+
+The path where the data is displayed can be set by modifying the value of the
+"$pathToBmsFiles" variable in the script.
+
+DEPENDANCIES
+------------
+
+Perl, and the "Device::SerialPort" Perl module.
+
+CONTACT
+-------
+
+Guillaume Le Gall <guillaume.legall@telecom-bretagne.eu>
+Baptiste Gaultier <http://baptistegaultier.fr>
+
+SEE ALSO
+--------
+
+BMS dashboard (a simple graphical application to display the data produced by
+this program):
+<https://github.com/telecombretagne/osv/tree/bms-dashboard/bms_reverse/bms-dashboard>
+

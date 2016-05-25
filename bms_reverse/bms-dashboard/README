@@ -1,0 +1,74 @@
+================
+osv-bms-dahboard
+================
+
+DESCRIPTION
+-----------
+
+This program can be used to display the information of the OSV's BMS, using
+the "osv-bms-data-driver.pl" script. It is a simple graphical application, just
+showing the data.
+
+The protocol specification is available at
+<https://github.com/telecombretagne/osv/blob/master/bms_reverse/bms_reverse.html>.
+Not all the data has been decoded yet, so some information may be missing (such
+as warning and error status…).
+
+LICENSE
+-------
+
+Copyright 2016 Institut Mines-Télécom
+
+This file is part of osv-bms-dashboard.
+
+osv-bms-dashboard is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the License,
+or (at your option) any later version.
+
+osv-bms-dashboard is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with osv-bms-dashboard.  If not, see
+<http://www.gnu.org/licenses/>.
+
+HOW TO
+------
+
+This is a Maven project. Compile with:
+$ mvn package
+
+at the root of the project (where this file is).
+
+Make sure the osv-bms-data-driver.pl script is running before starting this
+program. Maven makes an executable jar file. It can be run with:
+$ java -jar target/OSV-BMS-dashboard-{$VERSION}.jar
+
+If the path to the BMS's data files is not the default one (i.e.
+"/tmp/osv-bms/"), it can be set by using the File → Options menu.
+
+DEPENDANCIES
+------------
+
+Java, a JDK, and Maven should be enough. On a Debian like system, these can be
+installed with:
+$ sudo apt-get install openjdk-7-jdk maven2
+
+Also, the osv-bms-data-driver.pl script is required and must be running for this
+program to work.
+
+CONTACT
+-------
+
+Guillaume Le Gall <guillaume.legall@telecom-bretagne.eu>
+
+SEE ALSO
+--------
+
+bms-data-collector (a simple program that decodes the BMS's serial protocol,
+and places the data in files):
+<https://github.com/telecombretagne/osv/tree/bms-dashboard/bms_reverse/bms-dashboard>
+
