@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
 	EastPanel eastPanel;
 
 	OptionFrame optionframe;
-	
+
 	private BMSFilesWatcher bmsFilesWatcher;
 
 	public MainWindow() {
@@ -87,9 +87,9 @@ public class MainWindow extends JFrame {
 
 		setTitle(App.APPLICATION_NAME);
 		pack();
-		
+
 		optionframe = new OptionFrame(this);
-		
+
 		bmsFilesWatcher = new BMSFilesWatcher(this);
 		bmsFilesWatcher.execute();
 	}
@@ -145,26 +145,31 @@ public class MainWindow extends JFrame {
 
 	/**
 	 * Fires an event to be run in the event dispatch thread.
+	 * 
 	 * @param string
 	 */
 	public void displayError(String string) {
 		SwingUtilities.invokeLater(new ErrorDisplay(string, this));
 	}
-	
+
 	private class ErrorDisplay implements Runnable {
 		private String string;
 		private JFrame context;
+
 		public ErrorDisplay(String message, JFrame context) {
 			this.string = message;
 			this.context = context;
 		}
+
 		public void run() {
-			JOptionPane.showMessageDialog(context, string, "", JOptionPane.ERROR_MESSAGE);				
+			JOptionPane.showMessageDialog(context, string, "", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
+
 	public void restartBmsFileWatcher() {
-		bmsFilesWatcher.stopWatching();
+		if (bmsFilesWatcher != null) {
+			bmsFilesWatcher.stopWatching();
+		}
 		bmsFilesWatcher = new BMSFilesWatcher(this);
 		bmsFilesWatcher.execute();
 	}

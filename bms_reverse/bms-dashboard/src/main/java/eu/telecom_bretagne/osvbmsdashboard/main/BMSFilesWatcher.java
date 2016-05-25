@@ -508,6 +508,8 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 			} while (key != null && !stop);
 
 			service.close();
+			
+			System.out.println("Watcher service closed.");
 
 		} catch (NoSuchFileException e) {
 			mw.displayError("Path to BMS files does not exist!\n" + "Path is: " + App.PATH_TO_BMS_FILES + "\n"
