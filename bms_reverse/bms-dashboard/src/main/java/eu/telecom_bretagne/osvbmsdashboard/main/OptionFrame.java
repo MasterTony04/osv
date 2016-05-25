@@ -110,7 +110,6 @@ public class OptionFrame extends JFrame {
 		String confPath = App.PATH + App.SEPARATOR + CONF_FILE_NAME;
 		if(new File(confPath).exists()) {
 			for(String s : App.readFile(confPath).split("\n")) {
-				System.out.println("Reading: " + s);
 				if(s.startsWith(BMS_PATH + " ")) {
 					App.PATH_TO_BMS_FILES = (s.split(" "))[1];
 				}

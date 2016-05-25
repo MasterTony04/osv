@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,16 +79,17 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 	public static final String TEMPERATURE_3 = "temperature_3";
 
 	List<String> files = new ArrayList<String>();
+	List<String> cellVoltagesFields = new ArrayList<String>();
 	private MainWindow mw;
 	private boolean stop = false;
 
 	public BMSFilesWatcher(MainWindow mainWindow) {
 		this.mw = mainWindow;
-		createListOfFiles();
+		createListOfFilesAndCellVoltagesFields();
 		lookForFiles();
 	}
 
-	private void createListOfFiles() {
+	private void createListOfFilesAndCellVoltagesFields() {
 		files.add(BALANCING);
 		files.add(CELL_00_VOLTAGE);
 		files.add(CELL_01_VOLTAGE);
@@ -122,199 +124,352 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 		files.add(TEMPERATURE_1);
 		files.add(TEMPERATURE_2);
 		files.add(TEMPERATURE_3);
+		
+		cellVoltagesFields.add(DataPanel.CELL_01_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_02_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_03_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_04_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_05_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_06_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_07_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_08_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_09_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_10_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_11_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_12_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_13_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_14_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_15_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_16_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_17_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_18_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_19_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_20_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_21_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_22_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_23_VOLTAGE);
+		cellVoltagesFields.add(DataPanel.CELL_24_VOLTAGE);
 	}
 
 	private void updateFieldContent(String fileName, String pathToFile) {
 		if (fileName.equals(BALANCING)) {
+			try {
 			mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_BALANCING,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_BALANCING, 0);
+			}
 		}
 		if (fileName.equals(CELL_00_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_01_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_01_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_01_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_02_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_02_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_02_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_03_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_03_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_03_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_04_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_04_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_04_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_05_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_05_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_05_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_06_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_06_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_06_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_07_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_07_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_07_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_08_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_08_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_08_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_09_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_09_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_09_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_10_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_10_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_10_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_11_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_11_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_11_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_12_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_12_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_12_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_13_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_13_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_13_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_14_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_14_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_14_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_15_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_15_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_15_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_16_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_16_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_16_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_17_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_17_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_17_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_18_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_18_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_18_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_19_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_19_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_19_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_20_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_20_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_20_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_21_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_21_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_21_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_22_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_22_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_22_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_23_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_23_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CELL_23_VOLTAGE)) {
+			try {
 			mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_24_VOLTAGE,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.cellVoltagePanel.setData(DataPanel.CELL_24_VOLTAGE, 0);
+			}
 			updateBatteryOverallVoltage();
 		}
 		if (fileName.equals(CHARGING)) {
+			try {
 			mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_CHARGING,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_CHARGING, 0);
+			}
 		}
 		if (fileName.equals(CURRENT)) {
+			try {
 			mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_CURRENT,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_CURRENT, 0);
+			}
 		}
 		if (fileName.equals(PWM_TO_CHARGER)) {
+			try {
 			mw.centerPanel.batteryStatus.setData(DataPanel.PWM_TO_CHARGER,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.batteryStatus.setData(DataPanel.PWM_TO_CHARGER, 0);
+			}
 		}
 		if (fileName.equals(PWM_TO_ENGINE_CONTROLLER)) {
+			try {
 			mw.centerPanel.batteryStatus.setData(DataPanel.PWM_TO_ENGINE_CONTROLLER,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.centerPanel.batteryStatus.setData(DataPanel.PWM_TO_ENGINE_CONTROLLER, 0);
+			}
 		}
 		if (fileName.equals(SOC)) {
+			try {
 			mw.eastPanel.socDisplay.updateDisplay(Integer.parseInt(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.eastPanel.socDisplay.updateDisplay(0);
+			}
 		}
 		if (fileName.equals(TEMPERATURE_0)) {
+			try {
 			mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_0,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_0, 0);
+			}
 		}
 		if (fileName.equals(TEMPERATURE_1)) {
+			try {
 			mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_1,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_1, 0);
+			}
 		}
 		if (fileName.equals(TEMPERATURE_2)) {
+			try {
 			mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_2,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_2, 0);
+			}
 		}
 		if (fileName.equals(TEMPERATURE_3)) {
+			try {
 			mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_3,
 					Float.parseFloat(readFirstLineInFile(pathToFile)));
+			} catch (FileNotFoundException e) {
+				mw.eastPanel.temperaturesPanel.setData(DataPanel.TEMPERATURE_3, 0);
+			}
 		}
 	}
 
 	private void updateBatteryOverallVoltage() {
-		float bv = mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_01_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_02_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_03_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_04_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_05_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_06_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_07_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_08_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_09_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_10_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_11_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_12_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_13_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_14_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_15_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_16_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_17_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_18_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_19_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_20_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_21_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_22_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_23_VOLTAGE);
-		bv += mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_24_VOLTAGE);
+		float bv = 0f;
+		float cellMin = mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_01_VOLTAGE);
+		float cellMax = mw.centerPanel.cellVoltagePanel.getData(DataPanel.CELL_01_VOLTAGE);
+		for(String s : cellVoltagesFields) {
+			bv += mw.centerPanel.cellVoltagePanel.getData(s);
+			if(mw.centerPanel.cellVoltagePanel.getData(s) < cellMin) {
+				cellMin = mw.centerPanel.cellVoltagePanel.getData(s);
+			}
+			if(mw.centerPanel.cellVoltagePanel.getData(s) > cellMax) {
+				cellMax = mw.centerPanel.cellVoltagePanel.getData(s);
+			}
+		}
 		mw.centerPanel.batteryStatus.setData(DataPanel.BATTERY_VOLTAGE,
 				bv);
-		
-		// TODO Update min max average cells.
+		mw.eastPanel.cellVoltagePanel.setData(DataPanel.AVG_CELL_VOLTAGE,
+				bv / 24);
+		mw.eastPanel.cellVoltagePanel.setData(DataPanel.MIN_CELL_VOLTAGE,
+				cellMin);
+		mw.eastPanel.cellVoltagePanel.setData(DataPanel.MAX_CELL_VOLTAGE,
+				cellMax);
 	}
 	
 	private void lookForFiles() {
@@ -338,7 +493,7 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 		WatchService service = null;
 		try {
 			service = toWatch.getFileSystem().newWatchService();
-			toWatch.register(service, StandardWatchEventKinds.ENTRY_MODIFY);
+			toWatch.register(service, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.ENTRY_DELETE);
 
 			WatchKey key = null;
 
@@ -346,8 +501,8 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 				key = service.take();
 
 				for (WatchEvent<?> e : key.pollEvents()) {
-					String file = e.context().toString();
-					publish(file);
+					System.out.println("Received " + e.kind() + " event for file " + e.context() + ".");
+					publish(e.context().toString());
 				}
 				key.reset();
 			} while (key != null && !stop);
@@ -376,9 +531,9 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 				return;
 			}
 			String path = App.PATH_TO_BMS_FILES + App.SEPARATOR + s;
-			if ((new File(path)).exists()) {
+//			if ((new File(path)).exists()) {
 				updateFieldContent(s, path);
-			}
+//			}
 		}
 	}
 
@@ -386,13 +541,23 @@ public class BMSFilesWatcher extends SwingWorker<Void, String> {
 		this.stop = true;
 	}
 
-	public String readFirstLineInFile(String pathToFile) {
+	public String readFirstLineInFile(String pathToFile) throws FileNotFoundException {
 		String toReturn = "";
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(new File(pathToFile)));
 			toReturn = br.readLine();
 		} catch (IOException e) {
+			System.err.println(e.toString());
+			if(e instanceof FileNotFoundException) {
+				if(br != null) {
+					try {
+						br.close();
+					} catch (IOException e1) {
+					}
+				}
+				throw (FileNotFoundException) e;
+			}
 		} finally {
 			if (br != null) {
 				try {

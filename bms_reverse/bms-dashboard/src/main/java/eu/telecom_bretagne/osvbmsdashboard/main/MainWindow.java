@@ -33,6 +33,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * @author guillaumelg
@@ -142,8 +143,24 @@ public class MainWindow extends JFrame {
 		return this;
 	}
 
+	/**
+	 * Fires an event to be run in the event dispatch thread.
+	 * @param string
+	 */
 	public void displayError(String string) {
-		JOptionPane.showMessageDialog(this, string, "", JOptionPane.ERROR_MESSAGE);
+		SwingUtilities.invokeLater(new ErrorDisplay(string, this));
+	}
+	
+	private class ErrorDisplay implements Runnable {
+		private String string;
+		private JFrame context;
+		public ErrorDisplay(String message, JFrame context) {
+			this.string = message;
+			this.context = context;
+		}
+		public void run() {
+			JOptionPane.showMessageDialog(context, string, "", JOptionPane.ERROR_MESSAGE);				
+		}
 	}
 	
 	public void restartBmsFileWatcher() {
