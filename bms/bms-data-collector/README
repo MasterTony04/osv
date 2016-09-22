@@ -44,6 +44,9 @@ The path where the data is displayed can be set by modifying the value of the
 DEPENDANCIES
 ------------
 
+The kernel driver for CDC ACM devices. On a Debian like system run:
+$ sudo apt-get install acm
+
 Perl, and the "Device::SerialPort" Perl module.
 
 CONTACT
