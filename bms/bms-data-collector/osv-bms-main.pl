@@ -40,7 +40,7 @@ use LWP::UserAgent;
 
 use Device::SerialPort qw( :PARAM :STAT 0.07 );
 
-my $endpoint = "https://dweet.io:443/dweet/for/osv1";
+my $endpoint = "http://192.168.1.2:80/soc";
 
 my $user_agent = LWP::UserAgent->new;
 
@@ -76,6 +76,7 @@ my ( $count_in, $string_in );
 my $str   = "";
 my $time  = time - 10;
 my @array = ();
+
 while (1) {
 	( $count_in, $string_in ) = $port->read(1);
 
@@ -85,12 +86,13 @@ while (1) {
 	if ( $string_in ne "\n" ) {
 		$str .= $string_in;
 	} else {
-		if ( $str =~ /940(\d{2})/ ) {
+		if ( $str =~ /94([01]\d{2})/ ) {
 			print "SOC = " . $1 . "\n";
 
 			if ( time - $time > 10 ) {
 				print "Will send SOC.\n";
-				&sendRequestWithCells( $1, @array );
+				&sendRequest( $1 );
+#				&sendRequestWithCells( $1, @array );
 				$time = time;
 			}
 		} else {
@@ -104,17 +106,17 @@ while (1) {
 	}
 }
 
-sub readPortStatus {
-	my ( $blockingflags, $inbytes, $outbytes, $errflags ) = $port->status
-	  or warn "could not get port status\n";
-
-	print "blockingflags= " . $blockingflags . "\n";
-	print "inbytes= " . $inbytes . "\n";
-	print "outbytes= " . $outbytes . "\n";
-	print "errflags= " . $errflags . "\n";
-
-	die "Too many inbytes, wrong mode." if ( $inbytes > 1000 );
-}
+#sub readPortStatus {
+#	my ( $blockingflags, $inbytes, $outbytes, $errflags ) = $port->status
+#	  or warn "could not get port status\n";
+#
+#	print "blockingflags= " . $blockingflags . "\n";
+#	print "inbytes= " . $inbytes . "\n";
+#	print "outbytes= " . $outbytes . "\n";
+#	print "errflags= " . $errflags . "\n";
+#
+#	die "Too many inbytes, wrong mode." if ( $inbytes > 1000 );
+#}
 
 # TODO This is a copy/paste of sendRequest, with different request body. Should
 # be improved/refactored.
@@ -163,3 +165,4 @@ sub sendRequest {
 		print "Received reply: $message\n";
 	}
 }
+
