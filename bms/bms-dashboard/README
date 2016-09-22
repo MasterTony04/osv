@@ -70,5 +70,5 @@ SEE ALSO
 
 bms-data-collector (a simple program that decodes the BMS's serial protocol,
 and places the data in files):
-<https://github.com/telecombretagne/osv/tree/bms-dashboard/bms_reverse/bms-dashboard>
+<https://github.com/telecombretagne/osv/tree/master/bms/bms-data-collector>
 
