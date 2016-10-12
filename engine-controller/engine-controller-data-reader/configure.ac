@@ -14,7 +14,7 @@ AC_PROG_CC
 
 # Checks for libraries.
 PKG_PROG_PKG_CONFIG
-#PKG_CHECK_MODULES([log4cxx], [liblog4cxx >= 0.10])
+PKG_CHECK_MODULES([curlpp], [curlpp >= 0.7])
 
 
 # Checks for header files.

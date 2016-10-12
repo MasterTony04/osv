@@ -29,6 +29,7 @@
 
 #include <iostream>
 
+#include "DashboardClient.h"
 #include "ECClient.h"
 
 ECClient * ecClient;
@@ -51,13 +52,18 @@ int main(int argc, char * argv[]) {
 	std::cout << "Sigint handling initialized." << std::endl;
 
 	ecClient = new ECClient();
+	DashboardClient dbClient;
 
-	std::cout << "Client created." << std::endl;
+	std::cout << "Clients created." << std::endl;
 
 	std::cout << "Will get speed." << std::endl;
 
+	float speed = 0;
+
 	while (true) {
-		std::cout << std::to_string(ecClient->getEVSpeed()) << " km/h" << std::endl;
+		speed = ecClient->getEVSpeed();
+		std::cout << std::to_string(speed) << " km/h" << std::endl;
+		dbClient.postSpeed(speed);
 		usleep(250000);
 	}
 

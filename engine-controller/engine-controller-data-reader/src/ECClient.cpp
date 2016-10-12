@@ -29,7 +29,7 @@
  */
 ECClient::ECClient() {
 
-	if (!(usb = open("/dev/pty0", O_RDWR | O_NOCTTY))) {
+	if (!(usb = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY))) {
 		throw ECError("Failed to open /dev/ttyUSB0");
 	}
 
