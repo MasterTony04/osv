@@ -1,0 +1,48 @@
+=================================
+osv_engine_controller_data_reader
+=================================
+
+DESCRIPTION
+-----------
+
+This program can be used to reed the speed of the vehicle, by connecting a PC
+to the RS232 port of the engine controller.
+
+LICENSE
+-------
+
+Copyright 2016 Institut Mines-Télécom
+
+osv_engine_controller_data_reader is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as published
+by the Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+osv_engine_controller_data_reader is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+License for more details.
+
+You should have received a copy of the GNU General Public License
+along with osv_engine_controller_data_reader. If not, see <http://www.gnu.org/licenses/>.
+
+HOW TO
+------
+
+This is a Gnu Autotools project. Compile with:
+$ ./bootstrap
+$ ./configure
+$ make
+
+DEPENDANCIES
+------------
+
+TODO
+
+Dependancies need to be properly checked with pkgconfig, from configure.ac.
+
+CONTACT
+-------
+
+Guillaume Le Gall <guillaume.legall@telecom-bretagne.eu>
+Baptiste Gaultier <http://baptistegaultier.fr>

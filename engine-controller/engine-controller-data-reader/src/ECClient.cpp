@@ -3,6 +3,23 @@
  *
  *  Created on: 11 oct. 2016
  *      Author: guillaumelg
+ *
+ * Copyright 2016 Institut Mines-Télécom
+ *
+ * This file is part of osv_engine_controller_data_reader.
+ *
+ * osv_engine_controller_data_reader is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * osv_engine_controller_data_reader is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * osv_engine_controller_data_reader. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "ECClient.h"
@@ -50,8 +67,8 @@ ECClient::~ECClient() {
 }
 
 float ECClient::getEVSpeed() {
-	unsigned char cmdBuf[] = {0x53, 0x04, 0x03, 0x05, 0x16, 0x00, 0xe3, 0x9d};
-	unsigned char resBuf[READ_BUF_SIZE] = {};
+	unsigned char cmdBuf[] = { 0x53, 0x04, 0x03, 0x05, 0x16, 0x00, 0xe3, 0x9d };
+	unsigned char resBuf[READ_BUF_SIZE] = { };
 
 	writeToEC(8, cmdBuf);
 
