@@ -50,7 +50,6 @@ ECClient::~ECClient() {
 }
 
 float ECClient::getEVSpeed() {
-	// TODO auto-generated
 	unsigned char cmdBuf[] = {0x53, 0x04, 0x03, 0x05, 0x16, 0x00, 0xe3, 0x9d};
 	unsigned char resBuf[READ_BUF_SIZE] = {};
 
@@ -70,14 +69,14 @@ void ECClient::writeToEC(uint16_t size, unsigned char* toWrite) {
 }
 
 void ECClient::readFromEC(uint16_t size, unsigned char* toRead) {
-	// DEBUG
-//	if (read(usb, toRead, size) < 0) {
-//		throw ECError("Read failed");
-//	}
-
-	unsigned char values[] = {0x53, 0x04, 0x06, 0x03, 0x05, 0x16, 0x00, 0x03, 0x00, 0x05, 0x00, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00, 0x01, 0xea, 0x89, 0xd8, 0x62};
-
-	for(uint16_t i = 0 ; i < size ; i++) {
-		toRead[i] = values[i];
+	if (read(usb, toRead, size) < 0) {
+		throw ECError("Read failed");
 	}
+
+	// DEBUG
+//	unsigned char values[] = {0x53, 0x04, 0x06, 0x03, 0x05, 0x16, 0x00, 0x03, 0x00, 0x05, 0x00, 0x00, 0x01, 0x04, 0x00, 0x00, 0x00, 0x01, 0xea, 0x89, 0xd8, 0x62};
+//
+//	for(uint16_t i = 0 ; i < size ; i++) {
+//		toRead[i] = values[i];
+//	}
 }
