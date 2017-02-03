@@ -22,6 +22,7 @@
 
 package fr.enstb.osv.dashboard;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -59,6 +60,7 @@ public class MainWindow extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("OSV Dashboard");
+		setMinimumSize(new Dimension(640, 360));
 
 		mainPanel = new MainPanel(this);
 		

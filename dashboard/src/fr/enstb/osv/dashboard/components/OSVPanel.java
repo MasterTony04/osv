@@ -23,6 +23,7 @@
 package fr.enstb.osv.dashboard.components;
 
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JPanel;
 
@@ -44,6 +45,8 @@ public class OSVPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(mw.wallpaper, 0, 0, null);
+
+		g.drawImage(mw.wallpaper.getScaledInstance(mw.getWidth(), mw.getHeight(), Image.SCALE_SMOOTH), 0, 0,
+				mw.getWidth(), mw.getHeight(), null);
 	}
 }
