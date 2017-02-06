@@ -22,12 +22,15 @@
 
 package fr.enstb.osv.dashboard.components;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import fr.enstb.osv.dashboard.MainWindow;
+import fr.enstb.osv.dashboard.widgets.OSVDateWidget;
 
 /**
  * @author guillaumelg
@@ -40,6 +43,12 @@ public class OSVPanel extends JPanel {
 
 	public OSVPanel(MainWindow mw) {
 		this.mw = mw;
+		
+		this.setLayout(new BorderLayout());
+		
+		JPanel p1  = new JPanel();
+		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+		this.add((p1).add(new OSVDateWidget(mw)), BorderLayout.WEST);
 	}
 
 	@Override
