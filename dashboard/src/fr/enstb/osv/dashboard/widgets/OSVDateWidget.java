@@ -90,7 +90,6 @@ public class OSVDateWidget extends JPanel {
 		int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 2;
 		int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		g.drawString(time.getText(), xFPos, yFPos);
-
 	}
 
 	public class TimeChangeWathcer extends SwingWorker<Void, Void> {
