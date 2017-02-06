@@ -22,7 +22,10 @@
 
 package fr.enstb.osv.dashboard;
 
+import java.awt.BorderLayout;
+
 import fr.enstb.osv.dashboard.components.OSVPanel;
+import fr.enstb.osv.dashboard.widgets.OSVSpeedCounter;
 
 /**
  * @author guillaumelg
@@ -34,7 +37,8 @@ public class MainPanel extends OSVPanel {
 
 	public MainPanel(MainWindow mw) {
 		super(mw);
-		// TODO Auto-generated constructor stub
+		
+		add(new OSVSpeedCounter(mw), BorderLayout.CENTER);
 	}
 
 }

@@ -47,51 +47,51 @@ public class OSVDateWidget extends JPanel {
 	private static final long serialVersionUID = -4089580648619011563L;
 	private MainWindow mw;
 	private JLabel time;
+	private final Font font;
 
 	public OSVDateWidget(MainWindow mw) {
 		this.mw = mw;
 		time = new JLabel();
 		time.setForeground(Color.white);
 		time.setFont(new Font(time.getFont().getName(), Font.PLAIN, 64));
-		setMinimumSize(new Dimension(mw.leaf.getWidth(), mw.leaf.getHeight()));
-		setPreferredSize(new Dimension(mw.leaf.getWidth(), mw.leaf.getHeight()));
-		setOpaque(false);
-		
-		// setLayout(new BorderLayout());
-		// add(time, BorderLayout.CENTER);
+		font = getFont();
+		// setMinimumSize(new Dimension(mw.leaf.getWidth(),
+		// mw.leaf.getHeight()));
+		// setPreferredSize(new Dimension(mw.leaf.getWidth(),
+		// mw.leaf.getHeight()));
+
+		setOurWidth();
+
 		(new TimeChangeWathcer(this)).execute();
+	}
+
+	private void setOurWidth() {
+		int width = (int) (mw.getWidth() * 0.14);
+		setMinimumSize(new Dimension(width, mw.leaf.getHeight()));
+		setPreferredSize(new Dimension(width, mw.leaf.getHeight()));
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		
-//		super.paintComponent(g);
+		setOurWidth();
 
 		int x1 = (int) (this.getWidth() * 0.8);
 		int y1 = (int) (this.getWidth() * mw.leaf.getHeight() / mw.leaf.getWidth() * 0.8);
 
-		System.out.println("width = " + x1);
-		System.out.println("height = " + y1);
-
 		g.drawImage(mw.leaf.getScaledInstance(x1, y1, Image.SCALE_SMOOTH), this.getWidth() / 10, this.getHeight() / 3,
 				x1, y1, null);
 
-		time.setText(((new Date()).toString()).substring(11, 16));
-
 		setForeground(OSVColors.WHITE);
 		float yF = y1 / 4;
-		setFont(getFont().deriveFont(yF));
+		g.setFont(font.deriveFont(yF));
+
 		FontMetrics fm = getFontMetrics(getFont());
 		int xF = fm.stringWidth(time.getText());
-		System.out.println("xF = " + xF);
-		System.out.println("yF = " + yF);
-
 		int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 3;
-		int yFPos = (int) (this.getHeight() / 3 + y1 /2 + yF / 4);
-		System.out.println("xFPos = " + xFPos);
-		System.out.println("yFPos = " + yFPos);
-
+		int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		g.drawString(time.getText(), xFPos, yFPos);
+
+		System.out.println("Test 2");
 	}
 
 	public class TimeChangeWathcer extends SwingWorker<Void, Void> {
@@ -110,13 +110,16 @@ public class OSVDateWidget extends JPanel {
 					minute = Calendar.getInstance().get(Calendar.MINUTE);
 					publish();
 				}
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			}
 
 			return null;
 		}
 
 		protected void process(List<Void> chunks) {
+			System.out.println("Test 3");
+			time.setText(((new Date()).toString()).substring(11, 16));
+
 			odw.repaint();
 		}
 
