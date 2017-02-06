@@ -24,6 +24,7 @@ package fr.enstb.osv.dashboard.widgets;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 
 import javax.swing.ImageIcon;
@@ -39,7 +40,7 @@ public class OSVSpeedCounter extends JPanel {
 
 	private static final long serialVersionUID = 3557140821287365255L;
 	private MainWindow mw;
-	protected volatile float speed = 30;
+	protected volatile float speed = 110;
 
 	public OSVSpeedCounter(MainWindow mw) {
 		this.mw = mw;
@@ -56,18 +57,18 @@ public class OSVSpeedCounter extends JPanel {
 		g.drawImage(sizedCounter.getImage(), x1, y1, sizedCounter.getIconWidth(), sizedCounter.getIconHeight(), null);
 
 		ImageIcon sizedNeedle = new ImageIcon(mw.needle.getScaledInstance(xSize, ySize, Image.SCALE_SMOOTH));
-//		Graphics2D g2 = (Graphics2D) g;
-//		g2.rotate(speed / 10 * Math.PI / 8 - 3 * Math.PI / 8, sizedNeedle.getIconWidth() / 2,
-//				sizedNeedle.getIconHeight() / 2);
-//		g2.drawImage(sizedNeedle.getImage(), x1, y1, null);
-		AffineTransform trans = new AffineTransform();
-//		trans.translate(sizedNeedle.getIconWidth() / 2, sizedNeedle.getIconHeight() / 2);
-//		trans.rotate(Math.toRadians(-22.5 * speed - 67.5));
-//		trans.translate(-sizedNeedle.getIconWidth() / 2, -sizedNeedle.getIconHeight() / 2);
-		
-		System.out.println("Test");
-		
-		((Graphics2D) g).drawImage(sizedNeedle.getImage(), trans, this);
+		((Graphics2D) g).translate(x1, y1);
+		drawNeedle((Graphics2D) g, sizedNeedle);
+	}
+	
+	private void drawNeedle(Graphics2D g2d, ImageIcon needle) {
+		if (needle != null) {
+			AffineTransform trans = new AffineTransform();
+			trans.translate(needle.getIconWidth() / 2, needle.getIconHeight() / 2);
+			trans.rotate(Math.toRadians(2.25 * speed - 67.5));
+			trans.translate(-needle.getIconWidth() / 2, -needle.getIconHeight() / 2);
+			g2d.drawImage(needle.getImage(), trans, this);
+		}
 	}
 
 	public void setSpeed(float speed) {

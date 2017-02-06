@@ -87,11 +87,10 @@ public class OSVDateWidget extends JPanel {
 
 		FontMetrics fm = getFontMetrics(getFont());
 		int xF = fm.stringWidth(time.getText());
-		int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 3;
+		int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 2;
 		int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		g.drawString(time.getText(), xFPos, yFPos);
 
-		System.out.println("Test 2");
 	}
 
 	public class TimeChangeWathcer extends SwingWorker<Void, Void> {
@@ -117,7 +116,6 @@ public class OSVDateWidget extends JPanel {
 		}
 
 		protected void process(List<Void> chunks) {
-			System.out.println("Test 3");
 			time.setText(((new Date()).toString()).substring(11, 16));
 
 			odw.repaint();
