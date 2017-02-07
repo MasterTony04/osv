@@ -30,6 +30,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import fr.enstb.osv.dashboard.MainWindow;
+import fr.enstb.osv.dashboard.widgets.OSVBasicTextWidget;
 import fr.enstb.osv.dashboard.widgets.OSVBatteryWidget;
 import fr.enstb.osv.dashboard.widgets.OSVDateWidget;
 
@@ -51,10 +52,15 @@ public class OSVPanel extends JPanel {
 		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 		this.add((p1).add(new OSVDateWidget(mw)), BorderLayout.WEST);
 		
-		JPanel p2  = new JPanel();
-		p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-		p2.add(new OSVBatteryWidget(mw));
+//		JPanel p2  = new JPanel();
+//		p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
+//		p2.add(new OSVBatteryWidget(mw));
 		this.add(new OSVBatteryWidget(mw), BorderLayout.EAST);
+		
+		JPanel p3  = new JPanel();
+		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
+		p3.add(new OSVBasicTextWidget(mw));
+		this.add(p3, BorderLayout.SOUTH);
 	}
 
 	@Override
