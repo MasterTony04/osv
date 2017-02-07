@@ -38,6 +38,8 @@ public class MainPanel extends OSVPanel {
 	public MainPanel(MainWindow mw) {
 		super(mw);
 		
+		screensButtons.get(0).makeSelected(true);
+		
 		add(new OSVSpeedCounter(mw), BorderLayout.CENTER);
 	}
 

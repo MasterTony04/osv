@@ -42,7 +42,7 @@ public class OSVToggleButton extends OSVButton {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				isPressed = false;
-				isSelected = isSelected ? false : true;
+//				isSelected = isSelected ? false : true;
 			}
 
 			@Override
@@ -76,5 +76,13 @@ public class OSVToggleButton extends OSVButton {
 	public void makeSelected(boolean shouldBeSelected) {
 		isSelected = shouldBeSelected;
 		repaint();
+	}
+	
+	public boolean equals(Object button) {
+		if(button instanceof OSVToggleButton) {
+			OSVToggleButton b = (OSVToggleButton) button;
+			return b.getIcon().equals(this.getIcon()) && b.getPressedIcon().equals(this.getPressedIcon());
+		}
+		return false;
 	}
 }

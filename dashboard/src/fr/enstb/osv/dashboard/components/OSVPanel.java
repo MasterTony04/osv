@@ -23,9 +23,15 @@
 package fr.enstb.osv.dashboard.components;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -41,20 +47,32 @@ import fr.enstb.osv.dashboard.widgets.OSVDateWidget;
 public class OSVPanel extends JPanel {
 
 	private static final long serialVersionUID = 8572357445596859917L;
-	private MainWindow mw;
+	protected MainWindow mw;
+	public List<OSVToggleButton> screensButtons;
+	JPanel leftPanel;
+	private Component verticalSpaceLeftPanel;
+	public enum ENUM_BUTTON_FUNCTIONALITY {MAIN_PANEL, SETTINGS_PANEL};
 
 	public OSVPanel(MainWindow mw) {
 		this.mw = mw;
 		
+		buildScreensButtons();
+		
 		this.setLayout(new BorderLayout());
 		
-		JPanel p1  = new JPanel();
-		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-		this.add((p1).add(new OSVDateWidget(mw)), BorderLayout.WEST);
-		
-//		JPanel p2  = new JPanel();
-//		p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-//		p2.add(new OSVBatteryWidget(mw));
+		leftPanel = new JPanel();
+		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 4);
+		leftPanel.add(verticalSpaceLeftPanel);
+		leftPanel.add(new OSVDateWidget(mw));
+		for(OSVToggleButton b : screensButtons) {
+			JPanel p = new JPanel();
+			p.add(b);
+			leftPanel.add(p);
+		}
+		leftPanel.setOpaque(false);
+		this.add(leftPanel, BorderLayout.WEST);
+
 		this.add(new OSVBatteryWidget(mw), BorderLayout.EAST);
 		
 		JPanel p3  = new JPanel();
@@ -63,8 +81,64 @@ public class OSVPanel extends JPanel {
 		this.add(p3, BorderLayout.SOUTH);
 	}
 
+	private void buildScreensButtons() {
+		screensButtons = new ArrayList<OSVToggleButton>();
+		
+		OSVToggleButton mainB = new OSVToggleButton(mw.iconDash, mw.iconDashBright);
+//		mainB.addActionListener(new ScreenChangeListener(mainB));
+		mainB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(screensButtons.get(0).isSelected()) {
+					return;
+				}
+					
+				mw.switchToMainPanel();
+			}
+		});
+		
+//		OSVToggleButton gpsB = new OSVToggleButton(mw.iconGps, mw.iconGpsBright);
+		OSVToggleButton settingsB = new OSVToggleButton(mw.iconSettings, mw.iconSettingsBright);
+//		settingsB.addActionListener(new ScreenChangeListener(settingsB));
+		settingsB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(screensButtons.get(1).isSelected()) {
+					return;
+				}
+				mw.switchToSettingsPanel();
+			}
+		});
+		screensButtons.add(mainB);
+		screensButtons.add(settingsB);
+	}
+	
+//	private class ScreenChangeListener implements ActionListener {
+//		private OSVToggleButton b;
+//		private ENUM_BUTTON_FUNCTIONALITY f;
+//
+//		ScreenChangeListener (OSVToggleButton b, ENUM_BUTTON_FUNCTIONALITY f) {
+//			this.b = b;
+//			this.f = f;
+//		}
+//		
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			for(OSVToggleButton b : screensButtons) {
+//				if(!b.equals(this.b)) {
+//					b.makeSelected(false);
+//				}
+//			}
+//			switch 
+//		}
+//	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
+		leftPanel.remove(verticalSpaceLeftPanel);
+		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 3);
+		leftPanel.add(verticalSpaceLeftPanel, 0);
+		
 		super.paintComponent(g);
 
 		g.drawImage(mw.wallpaper.getScaledInstance(mw.getWidth(), mw.getHeight(), Image.SCALE_SMOOTH), 0, 0,

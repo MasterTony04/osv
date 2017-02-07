@@ -50,10 +50,6 @@ public class OSVBasicTextWidget extends JPanel {
 		text.setForeground(Color.white);
 		text.setFont(new Font(text.getFont().getName(), Font.PLAIN, 64));
 		font = getFont();
-		// setMinimumSize(new Dimension(mw.leaf.getWidth(),
-		// mw.leaf.getHeight()));
-		// setPreferredSize(new Dimension(mw.leaf.getWidth(),
-		// mw.leaf.getHeight()));
 
 		setOurWidth();
 

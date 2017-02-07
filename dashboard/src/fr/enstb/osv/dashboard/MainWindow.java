@@ -42,9 +42,16 @@ public class MainWindow extends JFrame {
 	public final ImageIcon iconGps;
 	public final ImageIcon iconSettings;
 	public final ImageIcon iconDash;
+	public final ImageIcon iconGpsBright;
+	public final ImageIcon iconSettingsBright;
+	public final ImageIcon iconDashBright;
+	public final ImageIcon iconClose;
+	public final ImageIcon iconCloseBright;
 	public final BufferedImage needle;
 	public final BufferedImage counter;
 	private MainPanel mainPanel;
+	private SettingsPanel settingsPanel;
+	public boolean mainPanelSected;
 
 	public MainWindow() throws IOException {
 		// load images
@@ -52,25 +59,68 @@ public class MainWindow extends JFrame {
 		leaf = ImageIO.read(getClass().getResourceAsStream("/leaf_background.png"));
 
 		iconGps = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_map.png")));
+		iconGpsBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_map_bright.png")));
 		iconSettings = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_settings.png")));
+		iconSettingsBright = new ImageIcon(
+				ImageIO.read(getClass().getResourceAsStream("/picto/p_settings_bright.png")));
 		iconDash = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_dashboard.png")));
+		iconDashBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_dashboard_bright.png")));
+		iconClose = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close.png")));
+		iconCloseBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close_bright.png")));
 
 		needle = ImageIO.read(getClass().getResourceAsStream("/needle.png"));
 		counter = ImageIO.read(getClass().getResourceAsStream("/counter.png"));
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("OSV Dashboard");
 		setMinimumSize(new Dimension(640, 360));
 
 		mainPanel = new MainPanel(this);
-		
+		settingsPanel = new SettingsPanel(this);
+
 		getContentPane().add(mainPanel);
-		
+
 		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		
+		// DEBUG
+		// setUndecorated(true);
+
 		pack();
 		setVisible(true);
 
+	}
+
+	public void switchToSettingsPanel() {
+	
+		try {
+			this.getContentPane().remove(mainPanel);
+		} catch (NullPointerException e) {
+			return;
+		}
+		this.getContentPane().add(settingsPanel);
+		settingsPanel.screensButtons.get(0).makeSelected(false);
+		settingsPanel.screensButtons.get(1).makeSelected(true);
+		pack();
+		revalidate();
+		repaint();
+		
+		mainPanelSected = false;
+	}
+
+	public void switchToMainPanel() {
+		try {
+			this.getContentPane().remove(settingsPanel);
+		} catch (NullPointerException e) {
+			return;
+		}
+		this.getContentPane().removeAll();
+		this.getContentPane().add(mainPanel);
+		settingsPanel.screensButtons.get(1).makeSelected(false);
+		settingsPanel.screensButtons.get(0).makeSelected(true);
+		pack();
+		revalidate();
+		repaint();
+		
+		mainPanelSected = true;
 	}
 
 }
