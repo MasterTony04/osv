@@ -87,7 +87,7 @@ public class OSVDateWidget extends JPanel {
 
 		FontMetrics fm = getFontMetrics(getFont());
 		int xF = fm.stringWidth(time.getText());
-		int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 2;
+		int xFPos = x1 / 2 + this.getWidth() / 10 - xF * 4/5;
 		int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		g.drawString(time.getText(), xFPos, yFPos);
 	}
