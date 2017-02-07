@@ -51,6 +51,8 @@ public class OSVPanel extends JPanel {
 	public List<OSVToggleButton> screensButtons;
 	JPanel leftPanel;
 	private Component verticalSpaceLeftPanel;
+	public OSVBatteryWidget batteryWidget;
+	public OSVBasicTextWidget textWidget;
 	public enum ENUM_BUTTON_FUNCTIONALITY {MAIN_PANEL, SETTINGS_PANEL};
 
 	public OSVPanel(MainWindow mw) {
@@ -62,7 +64,7 @@ public class OSVPanel extends JPanel {
 		
 		leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 4);
+		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() /4);
 		leftPanel.add(verticalSpaceLeftPanel);
 		leftPanel.add(new OSVDateWidget(mw));
 		for(OSVToggleButton b : screensButtons) {
@@ -73,11 +75,13 @@ public class OSVPanel extends JPanel {
 		leftPanel.setOpaque(false);
 		this.add(leftPanel, BorderLayout.WEST);
 
-		this.add(new OSVBatteryWidget(mw), BorderLayout.EAST);
+		batteryWidget = new OSVBatteryWidget(mw);
+		this.add(batteryWidget, BorderLayout.EAST);
 		
 		JPanel p3  = new JPanel();
 		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
-		p3.add(new OSVBasicTextWidget(mw));
+		textWidget = new OSVBasicTextWidget(mw);
+		p3.add(textWidget);
 		this.add(p3, BorderLayout.SOUTH);
 	}
 
@@ -89,7 +93,7 @@ public class OSVPanel extends JPanel {
 		mainB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(screensButtons.get(0).isSelected()) {
+				if(screensButtons.get(0).isSelected) {
 					return;
 				}
 					
@@ -97,19 +101,37 @@ public class OSVPanel extends JPanel {
 			}
 		});
 		
+		
+		
+		OSVToggleButton mapB = new OSVToggleButton(mw.iconGps, mw.iconGpsBright);
+//		mainB.addActionListener(new ScreenChangeListener(mainB));
+		mapB.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(screensButtons.get(1).isSelected) {
+					return;
+				}
+					
+				mw.switchToMapPanel();
+			}
+		});
+		
+		
+		
 //		OSVToggleButton gpsB = new OSVToggleButton(mw.iconGps, mw.iconGpsBright);
 		OSVToggleButton settingsB = new OSVToggleButton(mw.iconSettings, mw.iconSettingsBright);
 //		settingsB.addActionListener(new ScreenChangeListener(settingsB));
 		settingsB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(screensButtons.get(1).isSelected()) {
+				if(screensButtons.get(2).isSelected) {
 					return;
 				}
 				mw.switchToSettingsPanel();
 			}
 		});
 		screensButtons.add(mainB);
+		screensButtons.add(mapB);
 		screensButtons.add(settingsB);
 	}
 	
@@ -136,7 +158,7 @@ public class OSVPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		leftPanel.remove(verticalSpaceLeftPanel);
-		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 3);
+		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() /4);
 		leftPanel.add(verticalSpaceLeftPanel, 0);
 		
 		super.paintComponent(g);

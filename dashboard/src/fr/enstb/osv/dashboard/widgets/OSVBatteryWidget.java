@@ -108,10 +108,6 @@ public class OSVBatteryWidget extends JPanel {
 		// int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 2;
 		// int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		int yFPos = (int) (offY + height - height / 16 - yF / 2);
-		System.out.println("xFPos = " + xFPos);
-		System.out.println("yFPos = " + yFPos);
-		System.out.println("xF = " + xF);
-		System.out.println("yF = " + yF);
 		g.drawString(socS.getText(), xFPos, yFPos);
 		/////
 

@@ -30,6 +30,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import fr.enstb.osv.dashboard.components.OSVPanel;
+
 /**
  * @author guillaumelg
  *
@@ -49,14 +51,19 @@ public class MainWindow extends JFrame {
 	public final ImageIcon iconCloseBright;
 	public final BufferedImage needle;
 	public final BufferedImage counter;
+	public final BufferedImage map;
 	private MainPanel mainPanel;
 	private SettingsPanel settingsPanel;
 	public boolean mainPanelSected;
+	private MapPanel mapPanel;
+	private OSVPanel currentPanel;
+	OSVDataWatcher dataWatcher;
 
 	public MainWindow() throws IOException {
 		// load images
 		wallpaper = ImageIO.read(getClass().getResourceAsStream("/main_background.png"));
 		leaf = ImageIO.read(getClass().getResourceAsStream("/leaf_background.png"));
+		map = ImageIO.read(getClass().getResourceAsStream("/map.png"));
 
 		iconGps = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_map.png")));
 		iconGpsBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_map_bright.png")));
@@ -76,6 +83,7 @@ public class MainWindow extends JFrame {
 		setMinimumSize(new Dimension(640, 360));
 
 		mainPanel = new MainPanel(this);
+		mapPanel = new MapPanel(this);
 		settingsPanel = new SettingsPanel(this);
 
 		getContentPane().add(mainPanel);
@@ -86,6 +94,9 @@ public class MainWindow extends JFrame {
 
 		pack();
 		setVisible(true);
+		
+		currentPanel = mainPanel;
+		mainPanelSected = true;
 
 	}
 
@@ -93,34 +104,77 @@ public class MainWindow extends JFrame {
 	
 		try {
 			this.getContentPane().remove(mainPanel);
+			this.getContentPane().remove(mapPanel);
 		} catch (NullPointerException e) {
-			return;
 		}
 		this.getContentPane().add(settingsPanel);
 		settingsPanel.screensButtons.get(0).makeSelected(false);
-		settingsPanel.screensButtons.get(1).makeSelected(true);
+		settingsPanel.screensButtons.get(1).makeSelected(false);
+		settingsPanel.screensButtons.get(2).makeSelected(true);
 		pack();
 		revalidate();
 		repaint();
 		
+		currentPanel = settingsPanel;
+		mainPanelSected = false;
+	}
+	
+	public void switchToMapPanel() {
+		
+		try {
+			this.getContentPane().remove(mainPanel);
+			this.getContentPane().remove(settingsPanel);
+		} catch (NullPointerException e) {
+		}
+		this.getContentPane().add(mapPanel);
+		mapPanel.screensButtons.get(0).makeSelected(false);
+		mapPanel.screensButtons.get(1).makeSelected(true);
+		mapPanel.screensButtons.get(2).makeSelected(false);
+		pack();
+		revalidate();
+		repaint();
+		
+		currentPanel = mapPanel;
 		mainPanelSected = false;
 	}
 
 	public void switchToMainPanel() {
 		try {
 			this.getContentPane().remove(settingsPanel);
+			this.getContentPane().remove(mapPanel);
 		} catch (NullPointerException e) {
-			return;
 		}
 		this.getContentPane().removeAll();
 		this.getContentPane().add(mainPanel);
-		settingsPanel.screensButtons.get(1).makeSelected(false);
-		settingsPanel.screensButtons.get(0).makeSelected(true);
+		mainPanel.screensButtons.get(0).makeSelected(true);
+		mainPanel.screensButtons.get(1).makeSelected(false);
+		mainPanel.screensButtons.get(2).makeSelected(false);
 		pack();
 		revalidate();
 		repaint();
 		
+		currentPanel = mainPanel;
 		mainPanelSected = true;
+	}
+
+	public void setSoc(float f) {
+		System.out.println("SOC = " + f);
+		try {
+			mainPanel.batteryWidget.setSoc(f);
+			mapPanel.batteryWidget.setSoc(f);
+			settingsPanel.batteryWidget.setSoc(f);
+		} catch (OSVException e) {
+			System.err.println(e.toString());
+		}
+	}
+
+	public void setSpeed(int i) {
+		mainPanel.textWidget.setLabelText(i + " km/h");
+		mapPanel.textWidget.setLabelText(i + " km/h");
+		settingsPanel.textWidget.setLabelText(i + " km/h");
+		if(mainPanelSected) {
+			((MainPanel) currentPanel).speedCounter.setSpeed(i);
+		}
 	}
 
 }

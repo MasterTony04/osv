@@ -30,7 +30,7 @@ public class OSVToggleButton extends OSVButton {
 
 	private static final long serialVersionUID = -6939932897180946275L;
 
-	private boolean isSelected = false;
+	boolean isSelected = false;
 
 	public OSVToggleButton(Icon icon, Icon brightIcon) {
 		super(icon, brightIcon);

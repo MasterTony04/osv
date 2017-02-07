@@ -37,7 +37,11 @@ public class App {
 			// Override
 			public void run() {
 				try {
-					new MainWindow();
+					MainWindow mw = new MainWindow();
+					mw.setSoc(0);
+					mw.dataWatcher = new OSVDataWatcher(mw);
+					mw.dataWatcher.execute();
+					mw.dataWatcher.init();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -34,13 +34,16 @@ import fr.enstb.osv.dashboard.widgets.OSVSpeedCounter;
 public class MainPanel extends OSVPanel {
 
 	private static final long serialVersionUID = 7020725149595013712L;
+	public OSVSpeedCounter speedCounter;
 
 	public MainPanel(MainWindow mw) {
 		super(mw);
 		
 		screensButtons.get(0).makeSelected(true);
 		
-		add(new OSVSpeedCounter(mw), BorderLayout.CENTER);
+		speedCounter = new OSVSpeedCounter(mw);
+		
+		add(speedCounter, BorderLayout.CENTER);
 	}
 
 }
