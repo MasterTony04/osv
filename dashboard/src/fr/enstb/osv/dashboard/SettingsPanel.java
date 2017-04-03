@@ -23,6 +23,7 @@ package fr.enstb.osv.dashboard;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,25 +32,26 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import fr.enstb.osv.dashboard.components.OSVButton;
-import fr.enstb.osv.dashboard.components.OSVPanel;
 
 /**
  * @author guillaumelg
  *
  */
-public class SettingsPanel extends OSVPanel {
+public class SettingsPanel extends JPanel {
 
 	private static final long serialVersionUID = -1052555126335479979L;
 	private JPanel cp;
 	private Component verticalSpace;
+	private MainWindow mw;
 
 	public SettingsPanel(MainWindow mw) {
-		super(mw);
 
+		this.mw = mw;
+		this.setOpaque(false);
 		cp = new JPanel();
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		cp.setOpaque(false);
-		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 2);
+		verticalSpace = Box.createVerticalStrut(mw.getHeight() * 3 / 4);
 		cp.add(verticalSpace);
 
 		
@@ -70,12 +72,11 @@ public class SettingsPanel extends OSVPanel {
 	
 //	@Override
 //	protected void paintComponent(Graphics g) {
-//		
-////		cp.remove(verticalSpace);
-////		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 4);
-////		cp.add(verticalSpace, 0);
-//		
 //		super.paintComponents(g);
+//		
+//		cp.remove(verticalSpace);
+//		cp.add(verticalSpace, 0);
+//
 //	}
 
 }

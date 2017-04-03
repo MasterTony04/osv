@@ -96,7 +96,6 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 			}
 			key.reset();
 		}
-		//return null;
 	}
 	
 	public void process(List<String> data) {
@@ -120,7 +119,7 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 		}
 		return lign;
 	}
-	
+
 	public void init() {
 		if((new File(socFile)).exists()) {
 			mw.setSoc(Float.parseFloat(readFirstLineInFile(socFile)) / 100);
@@ -129,5 +128,4 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 			mw.setSpeed(Integer.parseInt(readFirstLineInFile(speedFile)));
 		}
 	}
-
 }

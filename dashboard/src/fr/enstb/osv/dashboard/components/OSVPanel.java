@@ -36,9 +36,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import fr.enstb.osv.dashboard.MainWindow;
+import fr.enstb.osv.dashboard.MapPanel;
+import fr.enstb.osv.dashboard.SettingsPanel;
 import fr.enstb.osv.dashboard.widgets.OSVBasicTextWidget;
 import fr.enstb.osv.dashboard.widgets.OSVBatteryWidget;
 import fr.enstb.osv.dashboard.widgets.OSVDateWidget;
+import fr.enstb.osv.dashboard.widgets.OSVSpeedCounter;
 
 /**
  * @author guillaumelg
@@ -53,21 +56,33 @@ public class OSVPanel extends JPanel {
 	private Component verticalSpaceLeftPanel;
 	public OSVBatteryWidget batteryWidget;
 	public OSVBasicTextWidget textWidget;
-	public enum ENUM_BUTTON_FUNCTIONALITY {MAIN_PANEL, SETTINGS_PANEL};
+	public OSVSpeedCounter speedCounter;
+	private MapPanel mapPanel;
+	private OSVToggleButton mainB;
+	private OSVToggleButton mapB;
+	private OSVToggleButton settingsB;
+	private SettingsPanel settingsPanel;
+	private Component verticalSpaceLeftPanel2;
+
+	public enum ENUM_BUTTON_FUNCTIONALITY {
+		MAIN_PANEL, SETTINGS_PANEL
+	};
 
 	public OSVPanel(MainWindow mw) {
 		this.mw = mw;
-		
+
 		buildScreensButtons();
-		
+
 		this.setLayout(new BorderLayout());
-		
+
 		leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() /4);
-		leftPanel.add(verticalSpaceLeftPanel);
-		leftPanel.add(new OSVDateWidget(mw));
-		for(OSVToggleButton b : screensButtons) {
+		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 2);
+		leftPanel.add(verticalSpaceLeftPanel, 0);
+		leftPanel.add(new OSVDateWidget(mw), 1);
+		verticalSpaceLeftPanel2 = Box.createVerticalStrut(mw.getHeight() / 4);
+		leftPanel.add(verticalSpaceLeftPanel2, 2);
+		for (OSVToggleButton b : screensButtons) {
 			JPanel p = new JPanel();
 			p.add(b);
 			leftPanel.add(p);
@@ -77,93 +92,106 @@ public class OSVPanel extends JPanel {
 
 		batteryWidget = new OSVBatteryWidget(mw);
 		this.add(batteryWidget, BorderLayout.EAST);
-		
-		JPanel p3  = new JPanel();
+
+		JPanel p3 = new JPanel();
 		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
 		textWidget = new OSVBasicTextWidget(mw);
 		p3.add(textWidget);
 		this.add(p3, BorderLayout.SOUTH);
+
+		screensButtons.get(0).makeSelected(true);
+
+		speedCounter = new OSVSpeedCounter(mw);
+		mapPanel = new MapPanel(mw);
+		settingsPanel = new SettingsPanel(mw);
+
+		add(speedCounter, BorderLayout.CENTER);
+		
+		this.revalidate();
 	}
 
 	private void buildScreensButtons() {
 		screensButtons = new ArrayList<OSVToggleButton>();
-		
-		OSVToggleButton mainB = new OSVToggleButton(mw.iconDash, mw.iconDashBright);
-//		mainB.addActionListener(new ScreenChangeListener(mainB));
+
+		mainB = new OSVToggleButton(mw.iconDash, mw.iconDashBright);		
 		mainB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(screensButtons.get(0).isSelected) {
+				if (screensButtons.get(0).isSelected) {
 					return;
 				}
-					
-				mw.switchToMainPanel();
+				mainB.makeSelected(true);
+				mapB.makeSelected(false);
+				settingsB.makeSelected(false);
+				switchToSpeedCounter();
 			}
 		});
-		
-		
-		
-		OSVToggleButton mapB = new OSVToggleButton(mw.iconGps, mw.iconGpsBright);
-//		mainB.addActionListener(new ScreenChangeListener(mainB));
+
+		mapB = new OSVToggleButton(mw.iconGps, mw.iconGpsBright);
 		mapB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(screensButtons.get(1).isSelected) {
+				if (screensButtons.get(1).isSelected) {
 					return;
 				}
-					
-				mw.switchToMapPanel();
+				mainB.makeSelected(false);
+				mapB.makeSelected(true);
+				settingsB.makeSelected(false);
+				switchToMap();
 			}
 		});
-		
-		
-		
-//		OSVToggleButton gpsB = new OSVToggleButton(mw.iconGps, mw.iconGpsBright);
-		OSVToggleButton settingsB = new OSVToggleButton(mw.iconSettings, mw.iconSettingsBright);
-//		settingsB.addActionListener(new ScreenChangeListener(settingsB));
+
+		settingsB = new OSVToggleButton(mw.iconSettings, mw.iconSettingsBright);
 		settingsB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(screensButtons.get(2).isSelected) {
+				if (screensButtons.get(2).isSelected) {
 					return;
 				}
-				mw.switchToSettingsPanel();
+				mainB.makeSelected(false);
+				mapB.makeSelected(false);
+				settingsB.makeSelected(true);
+				switchToSettings();
 			}
 		});
 		screensButtons.add(mainB);
 		screensButtons.add(mapB);
 		screensButtons.add(settingsB);
 	}
-	
-//	private class ScreenChangeListener implements ActionListener {
-//		private OSVToggleButton b;
-//		private ENUM_BUTTON_FUNCTIONALITY f;
-//
-//		ScreenChangeListener (OSVToggleButton b, ENUM_BUTTON_FUNCTIONALITY f) {
-//			this.b = b;
-//			this.f = f;
-//		}
-//		
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			for(OSVToggleButton b : screensButtons) {
-//				if(!b.equals(this.b)) {
-//					b.makeSelected(false);
-//				}
-//			}
-//			switch 
-//		}
-//	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		leftPanel.remove(verticalSpaceLeftPanel);
-		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() /4);
-		leftPanel.add(verticalSpaceLeftPanel, 0);
-		
+//		leftPanel.remove(verticalSpaceLeftPanel);
+//		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 4);
+//		leftPanel.add(verticalSpaceLeftPanel, 0);
+
 		super.paintComponent(g);
 
 		g.drawImage(mw.wallpaper.getScaledInstance(mw.getWidth(), mw.getHeight(), Image.SCALE_SMOOTH), 0, 0,
 				mw.getWidth(), mw.getHeight(), null);
+	}
+
+	private void switchToSpeedCounter() {
+		remove(mapPanel);
+		remove(settingsPanel);
+		add(speedCounter, BorderLayout.CENTER);
+		revalidate();
+		repaint();
+	}
+
+	private void switchToMap() {
+		remove(speedCounter);
+		remove(settingsPanel);
+		add(mapPanel, BorderLayout.CENTER);
+		revalidate();
+		repaint();
+	}
+
+	private void switchToSettings() {
+		remove(speedCounter);
+		remove(mapPanel);
+		add(settingsPanel, BorderLayout.CENTER);
+		revalidate();
+		repaint();
 	}
 }

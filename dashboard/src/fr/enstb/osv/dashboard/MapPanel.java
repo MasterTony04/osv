@@ -21,51 +21,49 @@
  */
 package fr.enstb.osv.dashboard;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import fr.enstb.osv.dashboard.components.OSVButton;
-import fr.enstb.osv.dashboard.components.OSVPanel;
-
 /**
  * @author guillaumelg
  *
  */
-public class MapPanel extends OSVPanel {
+public class MapPanel extends JPanel {
 
 	private static final long serialVersionUID = -1052555126335479979L;
 	private JPanel cp;
 	private Component verticalSpace;
+	private MainWindow mw;
 
 	public MapPanel(MainWindow mw) {
-		super(mw);
 
+		this.mw = mw;
+		this.setOpaque(false);
+		
 		cp = new JPanel();
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		cp.setOpaque(false);
-		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 2);
+		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 4);
 		cp.add(verticalSpace);
 
 		
 		
 		JPanel cp1 = new MapDisplay();
-//		cp1.setOpaque(false);
+		cp1.setOpaque(false);
 		
 //		cp1.add(new ImageIcon(mw.map));
 		
 		cp.add(cp1);
 		
-		add(cp, BorderLayout.CENTER);
+//		add(cp1, BorderLayout.CENTER);
+		add(cp);
 	}
 	
 	class MapDisplay extends JPanel {

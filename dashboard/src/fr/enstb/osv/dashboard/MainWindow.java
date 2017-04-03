@@ -29,6 +29,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import fr.enstb.osv.dashboard.components.OSVPanel;
 
@@ -52,11 +53,9 @@ public class MainWindow extends JFrame {
 	public final BufferedImage needle;
 	public final BufferedImage counter;
 	public final BufferedImage map;
-	private MainPanel mainPanel;
-	private SettingsPanel settingsPanel;
+	private OSVPanel osvPanel;
 	public boolean mainPanelSected;
-	private MapPanel mapPanel;
-	private OSVPanel currentPanel;
+	
 	OSVDataWatcher dataWatcher;
 
 	public MainWindow() throws IOException {
@@ -78,102 +77,97 @@ public class MainWindow extends JFrame {
 		needle = ImageIO.read(getClass().getResourceAsStream("/needle.png"));
 		counter = ImageIO.read(getClass().getResourceAsStream("/counter.png"));
 
+		// Set up frame.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("OSV Dashboard");
 		setMinimumSize(new Dimension(640, 360));
 
-		mainPanel = new MainPanel(this);
-		mapPanel = new MapPanel(this);
-		settingsPanel = new SettingsPanel(this);
-
-		getContentPane().add(mainPanel);
+		osvPanel = new OSVPanel(this);
+		getContentPane().add(osvPanel);
 
 		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		// DEBUG
 		// setUndecorated(true);
 
+		
+		
+//		currentPanel = mainPanel;
+		mainPanelSected = true;
+		
 		pack();
 		setVisible(true);
-		
-		currentPanel = mainPanel;
-		mainPanelSected = true;
-
 	}
 
-	public void switchToSettingsPanel() {
+//	public void switchToSettingsPanel() {
 	
-		try {
-			this.getContentPane().remove(mainPanel);
-			this.getContentPane().remove(mapPanel);
-		} catch (NullPointerException e) {
-		}
-		this.getContentPane().add(settingsPanel);
-		settingsPanel.screensButtons.get(0).makeSelected(false);
-		settingsPanel.screensButtons.get(1).makeSelected(false);
-		settingsPanel.screensButtons.get(2).makeSelected(true);
-		pack();
-		revalidate();
-		repaint();
-		
-		currentPanel = settingsPanel;
-		mainPanelSected = false;
-	}
+//		try {
+//			this.getContentPane().remove(mainPanel);
+//			this.getContentPane().remove(mapPanel);
+//		} catch (NullPointerException e) {
+//		}
+//		this.getContentPane().add(settingsPanel);
+//		settingsPanel.screensButtons.get(0).makeSelected(false);
+//		settingsPanel.screensButtons.get(1).makeSelected(false);
+//		settingsPanel.screensButtons.get(2).makeSelected(true);
+//		pack();
+//		revalidate();
+//		repaint();
+//		
+//		currentPanel = settingsPanel;
+//		mainPanelSected = false;
+//	}
 	
-	public void switchToMapPanel() {
+//	public void switchToMapPanel() {
 		
-		try {
-			this.getContentPane().remove(mainPanel);
-			this.getContentPane().remove(settingsPanel);
-		} catch (NullPointerException e) {
-		}
-		this.getContentPane().add(mapPanel);
-		mapPanel.screensButtons.get(0).makeSelected(false);
-		mapPanel.screensButtons.get(1).makeSelected(true);
-		mapPanel.screensButtons.get(2).makeSelected(false);
-		pack();
-		revalidate();
-		repaint();
-		
-		currentPanel = mapPanel;
-		mainPanelSected = false;
-	}
+//		try {
+//			this.getContentPane().remove(mainPanel);
+//			this.getContentPane().remove(settingsPanel);
+//		} catch (NullPointerException e) {
+//		}
+//		this.getContentPane().add(mapPanel);
+//		mapPanel.screensButtons.get(0).makeSelected(false);
+//		mapPanel.screensButtons.get(1).makeSelected(true);
+//		mapPanel.screensButtons.get(2).makeSelected(false);
+//		pack();
+//		revalidate();
+//		repaint();
+//		
+//		currentPanel = mapPanel;
+//		mainPanelSected = false;
+//	}
 
-	public void switchToMainPanel() {
-		try {
-			this.getContentPane().remove(settingsPanel);
-			this.getContentPane().remove(mapPanel);
-		} catch (NullPointerException e) {
-		}
-		this.getContentPane().removeAll();
-		this.getContentPane().add(mainPanel);
-		mainPanel.screensButtons.get(0).makeSelected(true);
-		mainPanel.screensButtons.get(1).makeSelected(false);
-		mainPanel.screensButtons.get(2).makeSelected(false);
-		pack();
-		revalidate();
-		repaint();
-		
-		currentPanel = mainPanel;
-		mainPanelSected = true;
-	}
+//	public void switchToMainPanel() {
+//		try {
+//			this.getContentPane().remove(settingsPanel);
+//			this.getContentPane().remove(mapPanel);
+//		} catch (NullPointerException e) {
+//		}
+//		this.getContentPane().removeAll();
+//		this.getContentPane().add(mainPanel);
+//		mainPanel.screensButtons.get(0).makeSelected(true);
+//		mainPanel.screensButtons.get(1).makeSelected(false);
+//		mainPanel.screensButtons.get(2).makeSelected(false);
+//		pack();
+//		revalidate();
+//		repaint();
+//		
+//		currentPanel = mainPanel;
+//		mainPanelSected = true;
+//	}
 
 	public void setSoc(float f) {
 		System.out.println("SOC = " + f);
 		try {
-			mainPanel.batteryWidget.setSoc(f);
-			mapPanel.batteryWidget.setSoc(f);
-			settingsPanel.batteryWidget.setSoc(f);
+			osvPanel.batteryWidget.setSoc(f);
 		} catch (OSVException e) {
 			System.err.println(e.toString());
 		}
 	}
 
 	public void setSpeed(int i) {
-		mainPanel.textWidget.setLabelText(i + " km/h");
-		mapPanel.textWidget.setLabelText(i + " km/h");
-		settingsPanel.textWidget.setLabelText(i + " km/h");
+		osvPanel.textWidget.setLabelText(i + " km/h");
 		if(mainPanelSected) {
-			((MainPanel) currentPanel).speedCounter.setSpeed(i);
+			osvPanel.speedCounter.setSpeed(i);
 		}
 	}
 
