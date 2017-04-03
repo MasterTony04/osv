@@ -23,6 +23,9 @@
 package fr.enstb.osv.dashboard;
 
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -90,6 +93,8 @@ public class MainWindow extends JFrame {
 		
 		mainPanelSected = true;
 		
+		addWindowStateListener(new MainWindowListener(this));
+		
 		pack();
 		setVisible(true);
 	}
@@ -110,4 +115,18 @@ public class MainWindow extends JFrame {
 		}
 	}
 
+	private class MainWindowListener implements WindowStateListener {
+		private MainWindow mw;
+
+		public MainWindowListener (MainWindow mw) {
+			this.mw = mw;
+		}
+
+		@Override
+		public void windowStateChanged(WindowEvent e) {
+			mw.revalidate();
+			mw.repaint();
+		}
+	}
+	
 }

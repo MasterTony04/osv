@@ -67,10 +67,10 @@ public class OSVBasicTextWidget extends JPanel {
 	protected void paintComponent(Graphics g) {
 		setOurWidth();
 
-		int x1 = (int) (this.getWidth() * 0.2);
-		int y1 = (int) (this.getHeight() * 0.8);
-		int xOff = (int) (this.getWidth() * 0.4);
-		int yOff = (int) (this.getHeight() * 0.1);
+		int x1 = (int) (((float) this.getWidth()) * 0.2);
+		int y1 = (int) (((float) this.getHeight()) * 0.8);
+		int xOff = (int) (((float) this.getWidth()) * 0.4);
+		int yOff = (int) (((float) this.getHeight()) * 0.1);
 
 		g.setColor(OSVColors.GREY_4);
 		g.fillRect(xOff, yOff, x1, y1);
