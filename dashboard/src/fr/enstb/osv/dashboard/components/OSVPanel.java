@@ -106,8 +106,6 @@ public class OSVPanel extends JPanel {
 		settingsPanel = new SettingsPanel(mw);
 
 		add(speedCounter, BorderLayout.CENTER);
-		
-		this.revalidate();
 	}
 
 	private void buildScreensButtons() {
@@ -161,9 +159,6 @@ public class OSVPanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-//		leftPanel.remove(verticalSpaceLeftPanel);
-//		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 4);
-//		leftPanel.add(verticalSpaceLeftPanel, 0);
 
 		super.paintComponent(g);
 

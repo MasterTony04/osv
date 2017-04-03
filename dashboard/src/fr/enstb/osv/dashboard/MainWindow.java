@@ -29,7 +29,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 import fr.enstb.osv.dashboard.components.OSVPanel;
 
@@ -88,72 +87,12 @@ public class MainWindow extends JFrame {
 		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		// DEBUG
 		// setUndecorated(true);
-
 		
-		
-//		currentPanel = mainPanel;
 		mainPanelSected = true;
 		
 		pack();
 		setVisible(true);
 	}
-
-//	public void switchToSettingsPanel() {
-	
-//		try {
-//			this.getContentPane().remove(mainPanel);
-//			this.getContentPane().remove(mapPanel);
-//		} catch (NullPointerException e) {
-//		}
-//		this.getContentPane().add(settingsPanel);
-//		settingsPanel.screensButtons.get(0).makeSelected(false);
-//		settingsPanel.screensButtons.get(1).makeSelected(false);
-//		settingsPanel.screensButtons.get(2).makeSelected(true);
-//		pack();
-//		revalidate();
-//		repaint();
-//		
-//		currentPanel = settingsPanel;
-//		mainPanelSected = false;
-//	}
-	
-//	public void switchToMapPanel() {
-		
-//		try {
-//			this.getContentPane().remove(mainPanel);
-//			this.getContentPane().remove(settingsPanel);
-//		} catch (NullPointerException e) {
-//		}
-//		this.getContentPane().add(mapPanel);
-//		mapPanel.screensButtons.get(0).makeSelected(false);
-//		mapPanel.screensButtons.get(1).makeSelected(true);
-//		mapPanel.screensButtons.get(2).makeSelected(false);
-//		pack();
-//		revalidate();
-//		repaint();
-//		
-//		currentPanel = mapPanel;
-//		mainPanelSected = false;
-//	}
-
-//	public void switchToMainPanel() {
-//		try {
-//			this.getContentPane().remove(settingsPanel);
-//			this.getContentPane().remove(mapPanel);
-//		} catch (NullPointerException e) {
-//		}
-//		this.getContentPane().removeAll();
-//		this.getContentPane().add(mainPanel);
-//		mainPanel.screensButtons.get(0).makeSelected(true);
-//		mainPanel.screensButtons.get(1).makeSelected(false);
-//		mainPanel.screensButtons.get(2).makeSelected(false);
-//		pack();
-//		revalidate();
-//		repaint();
-//		
-//		currentPanel = mainPanel;
-//		mainPanelSected = true;
-//	}
 
 	public void setSoc(float f) {
 		System.out.println("SOC = " + f);
