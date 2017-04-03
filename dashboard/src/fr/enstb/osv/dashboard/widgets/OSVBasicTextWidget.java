@@ -91,5 +91,4 @@ public class OSVBasicTextWidget extends JPanel {
 
 		repaint();
 	}
-
 }

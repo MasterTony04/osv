@@ -55,7 +55,6 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 
 	@Override
 	protected Void doInBackground() throws Exception {
-		// TODO Auto-generated method stub
 
 		System.out.println("Watcher starting");
 		
@@ -81,15 +80,14 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 
 					if (eventList.get(i).context().toString().equals("speed")) {
 						
-						sSpeed = "sp" + readFirstLineInFile(speedFile);
+						sSpeed = readFirstLineInFile(speedFile);
 						if (sSpeed != null) {
-							publish(sSpeed);
+							publish("sp" + sSpeed);
 						}
 					} else if (eventList.get(i).context().toString().equals("soc")) {
-						
-						sSoc = "so" + readFirstLineInFile(socFile);
+						sSoc =  readFirstLineInFile(socFile);
 						if (sSoc != null) {
-							publish(sSoc);
+							publish("so" + sSoc);
 						}
 					} 
 				}
@@ -101,7 +99,7 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 	public void process(List<String> data) {
 		for(String s : data) {
 			if(s.startsWith("sp")) {
-				mw.setSpeed(Integer.parseInt(s.substring(2)));
+				mw.setSpeed(Float.parseFloat(s.substring(2)));
 			} else if (s.startsWith("so")) {
 				mw.setSoc(Float.parseFloat(s.substring(2)) / 100);
 			}
@@ -125,7 +123,7 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 			mw.setSoc(Float.parseFloat(readFirstLineInFile(socFile)) / 100);
 		}
 		if((new File(speedFile)).exists()) {
-			mw.setSpeed(Integer.parseInt(readFirstLineInFile(speedFile)));
+			mw.setSpeed(Float.parseFloat(readFirstLineInFile(speedFile)));
 		}
 	}
 }

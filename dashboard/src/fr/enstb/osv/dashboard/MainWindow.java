@@ -57,7 +57,7 @@ public class MainWindow extends JFrame {
 	public final BufferedImage map;
 	private OSVPanel osvPanel;
 	public boolean mainPanelSected;
-	
+
 	OSVDataWatcher dataWatcher;
 
 	public MainWindow() throws IOException {
@@ -90,17 +90,16 @@ public class MainWindow extends JFrame {
 		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		// DEBUG
 		// setUndecorated(true);
-		
+
 		mainPanelSected = true;
-		
+
 		addWindowStateListener(new MainWindowListener(this));
-		
+
 		pack();
 		setVisible(true);
 	}
 
 	public void setSoc(float f) {
-		System.out.println("SOC = " + f);
 		try {
 			osvPanel.batteryWidget.setSoc(f);
 		} catch (OSVException e) {
@@ -108,9 +107,9 @@ public class MainWindow extends JFrame {
 		}
 	}
 
-	public void setSpeed(int i) {
-		osvPanel.textWidget.setLabelText(i + " km/h");
-		if(mainPanelSected) {
+	public void setSpeed(float i) {
+		osvPanel.textWidget.setLabelText((int) i + " km/h");
+		if (mainPanelSected) {
 			osvPanel.speedCounter.setSpeed(i);
 		}
 	}
@@ -118,7 +117,7 @@ public class MainWindow extends JFrame {
 	private class MainWindowListener implements WindowStateListener {
 		private MainWindow mw;
 
-		public MainWindowListener (MainWindow mw) {
+		public MainWindowListener(MainWindow mw) {
 			this.mw = mw;
 		}
 
@@ -128,5 +127,5 @@ public class MainWindow extends JFrame {
 			mw.repaint();
 		}
 	}
-	
+
 }

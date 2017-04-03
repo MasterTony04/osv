@@ -70,6 +70,9 @@ public class OSVSpeedCounter extends JPanel {
 	}
 
 	public void setSpeed(float speed) {
+		if(this.speed == speed) {
+			return;
+		}
 		this.speed = speed;
 		repaint();
 	}

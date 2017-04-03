@@ -114,6 +114,10 @@ public class OSVBatteryWidget extends JPanel {
 	}
 
 	public void setSoc(float soc) throws OSVException {
+		if (soc == this.soc) {
+			return;
+		}
+
 		if (soc < 0f || soc > 1f) {
 			throw new OSVException("Wrong SOC value: " + soc);
 		}
