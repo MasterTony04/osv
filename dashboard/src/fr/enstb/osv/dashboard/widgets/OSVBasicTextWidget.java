@@ -26,6 +26,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -66,10 +68,13 @@ public class OSVBasicTextWidget extends JPanel {
 	protected void paintComponent(Graphics g) {
 		setOurWidth();
 
-		int x1 = this.getWidth(); //(int) (((float) this.getWidth()) * 0.2);
+		int x1 = this.getWidth(); // (int) (((float) this.getWidth()) * 0.2);
 		int y1 = (int) (((float) this.getHeight()) * 0.8);
-		int xOff = 0; //(int) (((float) this.getWidth()) * 0.4);
+		int xOff = 0; // (int) (((float) this.getWidth()) * 0.4);
 		int yOff = (int) (((float) this.getHeight()) * 0.1);
+
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g.setColor(OSVColors.GREY_4);
 		g.fillRect(xOff, yOff, x1, y1);

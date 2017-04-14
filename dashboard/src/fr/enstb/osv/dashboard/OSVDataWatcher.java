@@ -46,6 +46,7 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 
 	public static final String speedFile = "/tmp/osvdatasimulator/speed";
 	public static final String socFile = "/tmp/osvdatasimulator/soc";
+	public static final String isChargingFile = "/tmp/osvdatasimulator/is_charging";
 
 	private MainWindow mw;
 
@@ -89,6 +90,13 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 						if (sSoc != null) {
 							publish("so" + sSoc);
 						}
+					} else if (eventList.get(i).context().toString().equals("is_charging")) {
+						sSoc = readFirstLineInFile(isChargingFile);
+						if (sSoc.startsWith("1")) {
+							publish("ch1");
+						} else {
+							publish("ch0");
+						}
 					} 
 				}
 			}
@@ -102,6 +110,8 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 				mw.setSpeed(Float.parseFloat(s.substring(2)));
 			} else if (s.startsWith("so")) {
 				mw.setSoc(Float.parseFloat(s.substring(2)) / 100);
+			} else if (s.startsWith("ch")) {
+				mw.setIsCharging(Integer.parseInt(s.substring(2)) == 1);
 			}
 		}
 	}

@@ -24,7 +24,6 @@ package fr.enstb.osv.dashboard;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -34,6 +33,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import fr.enstb.osv.dashboard.components.OSVPanel;
+import fr.enstb.osv.dashboard.components.OSVPanel.ENUM_OSV_PANEL;
 
 /**
  * @author guillaumelg
@@ -59,10 +59,21 @@ public class MainWindow extends JFrame {
 	public final BufferedImage needle;
 	public final BufferedImage counter;
 	public final BufferedImage map;
+	public final BufferedImage chargeLightning;
 	private OSVPanel osvPanel;
 	public boolean mainPanelSected;
 
 	OSVDataWatcher dataWatcher;
+	public BufferedImage chargeLightning0;
+	public BufferedImage chargeLightning1;
+	public BufferedImage chargeLightning2;
+	public BufferedImage chargeLightning3;
+	public BufferedImage chargeLightning4;
+	public BufferedImage chargeLightning5;
+	public BufferedImage chargeLightning6;
+	public BufferedImage chargeLightning7;
+	public BufferedImage chargeLightning8;
+	public BufferedImage chargeLightning9;
 
 	public MainWindow() throws IOException {
 		// load images
@@ -87,6 +98,18 @@ public class MainWindow extends JFrame {
 
 		needle = ImageIO.read(getClass().getResourceAsStream("/needle.png"));
 		counter = ImageIO.read(getClass().getResourceAsStream("/counter.png"));
+		chargeLightning = ImageIO.read(getClass().getResourceAsStream("/charge_lightning.png"));
+		chargeLightning0 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_0.png"));
+		chargeLightning1 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_1.png"));
+		chargeLightning2 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_2.png"));
+		chargeLightning3 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_3.png"));
+		chargeLightning4 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_4.png"));
+		chargeLightning5 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_5.png"));
+		chargeLightning6 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_6.png"));
+		chargeLightning7 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_7.png"));
+		chargeLightning8 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_8.png"));
+		chargeLightning9 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_9.png"));
+
 
 		// Set up frame.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -122,6 +145,36 @@ public class MainWindow extends JFrame {
 			osvPanel.speedCounter.setSpeed(i);
 		}
 	}
+	
+	public void setTemperature(int index, float value) {
+		if(osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+			if(index < 0 || index > 3) {
+				System.err.println("Temperature index must be in [0 ; 3].");
+				return;
+			}
+			try {
+				osvPanel.getSettingsPanel().temperatureSensorsWidgets.get(index).setTemperature(value);
+				osvPanel.getSettingsPanel().setTemperatureStatusWidgetColor();
+			} catch (OSVException e) {
+				System.err.println(e.toString());
+			}
+		}
+	}
+	
+	public void setCellVoltage(int index, float value) {
+		if(osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+			if(index < 0 || index > 23) {
+				System.err.println("Cell index must be in [0 ; 23].");
+				return;
+			}
+			try {
+				osvPanel.getSettingsPanel().batteryCellWidgets.get(index).setVoltage(value);
+				osvPanel.getSettingsPanel().setBatteryStatusWidgetColor();
+			} catch (OSVException e) {
+				System.err.println(e.toString());
+			}
+		}
+	}
 
 	private class MainWindowListener implements WindowStateListener {
 		private MainWindow mw;
@@ -135,6 +188,10 @@ public class MainWindow extends JFrame {
 			mw.revalidate();
 			mw.repaint();
 		}
+	}
+
+	public void setIsCharging(boolean b) {
+		osvPanel.batteryWidget.setIsCharging(b);
 	}
 
 }

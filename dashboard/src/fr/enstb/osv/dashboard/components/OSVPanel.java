@@ -70,9 +70,11 @@ public class OSVPanel extends JPanel {
 	JPanel bp3;
 	OSVButton exitButton;
 
-	public enum ENUM_BUTTON_FUNCTIONALITY {
-		MAIN_PANEL, SETTINGS_PANEL
+	public enum ENUM_OSV_PANEL {
+		MAIN_PANEL, MAP_PANEL, SETTINGS_PANEL
 	};
+	
+	public ENUM_OSV_PANEL selectedPanel = ENUM_OSV_PANEL.MAIN_PANEL;
 
 	public OSVPanel(MainWindow mw) {
 		this.mw = mw;
@@ -145,6 +147,7 @@ public class OSVPanel extends JPanel {
 				mainB.makeSelected(true);
 				mapB.makeSelected(false);
 				settingsB.makeSelected(false);
+				selectedPanel = ENUM_OSV_PANEL.MAIN_PANEL;
 				switchToSpeedCounter();
 			}
 		});
@@ -159,6 +162,7 @@ public class OSVPanel extends JPanel {
 				mainB.makeSelected(false);
 				mapB.makeSelected(true);
 				settingsB.makeSelected(false);
+				selectedPanel = ENUM_OSV_PANEL.MAP_PANEL;
 				switchToMap();
 			}
 		});
@@ -173,6 +177,7 @@ public class OSVPanel extends JPanel {
 				mainB.makeSelected(false);
 				mapB.makeSelected(false);
 				settingsB.makeSelected(true);
+				selectedPanel = ENUM_OSV_PANEL.SETTINGS_PANEL;
 				switchToSettings();
 			}
 		});
@@ -216,5 +221,9 @@ public class OSVPanel extends JPanel {
 		bp1.add(exitButton);
 		revalidate();
 		repaint();
+	}
+
+	public SettingsPanel getSettingsPanel() {
+		return this.settingsPanel;
 	}
 }

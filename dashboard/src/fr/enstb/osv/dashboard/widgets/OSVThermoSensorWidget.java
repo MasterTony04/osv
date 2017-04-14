@@ -145,4 +145,10 @@ public class OSVThermoSensorWidget extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * @return the temperature
+	 */
+	public float getTemperature() {
+		return temperature;
+	}
 }

@@ -28,7 +28,13 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -47,6 +53,10 @@ public class OSVBatteryWidget extends JPanel {
 	private JLabel socS;
 	private final Font font;
 	private float soc = 0f;
+	private volatile boolean isCharging = false;
+	TimerTask lightningPainterTask = null;
+	private Timer lightningPainterTaskTimer;
+	private int lightningCounter = -1;
 
 	public OSVBatteryWidget(MainWindow mw) {
 		this.mw = mw;
@@ -79,6 +89,7 @@ public class OSVBatteryWidget extends JPanel {
 		int y = getHeight();
 
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setColor(OSVColors.GREY_3);
 		int offX = x / 5;
 		int offY = y / 3;
@@ -98,7 +109,56 @@ public class OSVBatteryWidget extends JPanel {
 		g2d.drawRect(offX + width / 4, offY + height / 8, width / 2, 5 * height / 8);
 		g2d.drawRect(offX + width / 4 + width / 8, offY + height / 8 - height / 20, width / 4, height / 20);
 
-		/////
+		if (isCharging) {
+			// TODO Draw lightning
+			int ySize = height / 2;
+			int xSize = mw.chargeLightning.getWidth() * ySize / mw.chargeLightning.getHeight();
+			BufferedImage lightningImg;
+			switch (lightningCounter++) {
+			case 0:
+				lightningImg = mw.chargeLightning0;
+				break;
+			case 1:
+				lightningImg = mw.chargeLightning1;
+				break;
+			case 2:
+				lightningImg = mw.chargeLightning2;
+				break;
+			case 3:
+				lightningImg = mw.chargeLightning3;
+				break;
+			case 4:
+				lightningImg = mw.chargeLightning4;
+				break;
+			case 5:
+				lightningImg = mw.chargeLightning5;
+				break;
+			case 6:
+				lightningImg = mw.chargeLightning6;
+				break;
+			case 7:
+				lightningImg = mw.chargeLightning7;
+				break;
+			case 8:
+				lightningImg = mw.chargeLightning8;
+				break;
+			case 9:
+				lightningImg = mw.chargeLightning9;
+				break;
+			default:
+				lightningImg = mw.chargeLightning;
+			}
+			if(lightningCounter == 48) {
+				lightningCounter = -1;
+			}
+
+			ImageIcon sizedLightning = new ImageIcon(lightningImg.getScaledInstance(xSize, ySize, Image.SCALE_SMOOTH));
+			int x1 = offX + width / 2 - sizedLightning.getIconWidth() / 2;
+			int y1 = offY + 7 * height / 16 - sizedLightning.getIconHeight() / 2;
+			g.drawImage(sizedLightning.getImage(), x1, y1, sizedLightning.getIconWidth(),
+					sizedLightning.getIconHeight(), null);
+		}
+
 		setForeground(OSVColors.WHITE);
 		float yF = height / 12;
 		g.setFont(font.deriveFont(yF));
@@ -110,8 +170,6 @@ public class OSVBatteryWidget extends JPanel {
 		// int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		int yFPos = (int) (offY + height - height / 16 - yF / 2);
 		g.drawString(socS.getText(), xFPos, yFPos);
-		/////
-
 	}
 
 	public void setSoc(float soc) throws OSVException {
@@ -129,4 +187,30 @@ public class OSVBatteryWidget extends JPanel {
 		repaint();
 	}
 
+	public synchronized void setIsCharging(boolean charging) {
+		if (isCharging == charging) {
+			return;
+		}
+		isCharging = charging;
+		if (charging) {
+			lightningPainterTask = new TimerTask() {
+				@Override
+				public void run() {
+					getWidgetInstance().repaint();
+				}
+			};
+			lightningPainterTaskTimer = new Timer(true);
+			lightningPainterTaskTimer.scheduleAtFixedRate(lightningPainterTask, 0, 40);
+		} else {
+			if (lightningPainterTaskTimer != null) {
+				lightningPainterTaskTimer.cancel();
+				lightningPainterTaskTimer = null;
+			}
+			repaint();
+		}
+	}
+
+	private OSVBatteryWidget getWidgetInstance() {
+		return this;
+	}
 }

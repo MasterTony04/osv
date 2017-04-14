@@ -148,4 +148,8 @@ public class OSVBatteryCellWidget extends JPanel {
 
 		repaint();
 	}
+
+	public float getVoltage() {
+		return voltage;
+	}
 }

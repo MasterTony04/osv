@@ -27,8 +27,10 @@ public class OSVElementStatusWidget extends JPanel {
 	}
 
 	public void setStatus(boolean isOK) {
-		statusOK = isOK;
-		repaint();
+		if (statusOK != isOK) {
+			statusOK = isOK;
+			repaint();
+		}
 	}
 
 	@Override
