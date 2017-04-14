@@ -62,6 +62,7 @@ public class OSVBatteryWidget extends JPanel {
 		} catch (OSVException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	private void setOurWidth() {

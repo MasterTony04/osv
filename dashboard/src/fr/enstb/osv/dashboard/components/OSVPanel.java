@@ -25,6 +25,7 @@ package fr.enstb.osv.dashboard.components;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,6 +65,11 @@ public class OSVPanel extends JPanel {
 	private SettingsPanel settingsPanel;
 	private Component verticalSpaceLeftPanel2;
 
+	JPanel bottomPanel;
+	JPanel bp1;
+	JPanel bp3;
+	OSVButton exitButton;
+
 	public enum ENUM_BUTTON_FUNCTIONALITY {
 		MAIN_PANEL, SETTINGS_PANEL
 	};
@@ -74,6 +80,7 @@ public class OSVPanel extends JPanel {
 		buildScreensButtons();
 
 		this.setLayout(new BorderLayout());
+		setOpaque(false);
 
 		leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
@@ -93,11 +100,28 @@ public class OSVPanel extends JPanel {
 		batteryWidget = new OSVBatteryWidget(mw);
 		this.add(batteryWidget, BorderLayout.EAST);
 
-		JPanel p3 = new JPanel();
-		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new GridLayout(1, 3));
+
+		exitButton = new OSVButton(mw.iconClose, mw.iconCloseBright);
+		exitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		bp1 = new JPanel();
+		bp1.setOpaque(false);
+		// bp1.add(exit);
+		bottomPanel.add(bp1);
+		bottomPanel.setOpaque(false);
+
 		textWidget = new OSVBasicTextWidget(mw);
-		p3.add(textWidget);
-		this.add(p3, BorderLayout.SOUTH);
+		bottomPanel.add(textWidget);
+		bp3 = new JPanel();
+		bp3.setOpaque(false);
+		bottomPanel.add(bp3);
+		this.add(bottomPanel, BorderLayout.SOUTH);
 
 		screensButtons.get(0).makeSelected(true);
 
@@ -111,7 +135,7 @@ public class OSVPanel extends JPanel {
 	private void buildScreensButtons() {
 		screensButtons = new ArrayList<OSVToggleButton>();
 
-		mainB = new OSVToggleButton(mw.iconDash, mw.iconDashBright);		
+		mainB = new OSVToggleButton(mw.iconDash, mw.iconDashBright);
 		mainB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -170,6 +194,7 @@ public class OSVPanel extends JPanel {
 		remove(mapPanel);
 		remove(settingsPanel);
 		add(speedCounter, BorderLayout.CENTER);
+		bp1.remove(exitButton);
 		revalidate();
 		repaint();
 	}
@@ -178,6 +203,7 @@ public class OSVPanel extends JPanel {
 		remove(speedCounter);
 		remove(settingsPanel);
 		add(mapPanel, BorderLayout.CENTER);
+		bp1.remove(exitButton);
 		revalidate();
 		repaint();
 	}
@@ -186,6 +212,8 @@ public class OSVPanel extends JPanel {
 		remove(speedCounter);
 		remove(mapPanel);
 		add(settingsPanel, BorderLayout.CENTER);
+		settingsPanel.recalculateDimensions();
+		bp1.add(exitButton);
 		revalidate();
 		repaint();
 	}

@@ -54,7 +54,6 @@ public class OSVBasicTextWidget extends JPanel {
 		setOurWidth();
 
 		setLabelText("0 km/h");
-
 	}
 
 	private void setOurWidth() {
@@ -67,9 +66,9 @@ public class OSVBasicTextWidget extends JPanel {
 	protected void paintComponent(Graphics g) {
 		setOurWidth();
 
-		int x1 = (int) (((float) this.getWidth()) * 0.2);
+		int x1 = this.getWidth(); //(int) (((float) this.getWidth()) * 0.2);
 		int y1 = (int) (((float) this.getHeight()) * 0.8);
-		int xOff = (int) (((float) this.getWidth()) * 0.4);
+		int xOff = 0; //(int) (((float) this.getWidth()) * 0.4);
 		int yOff = (int) (((float) this.getHeight()) * 0.1);
 
 		g.setColor(OSVColors.GREY_4);

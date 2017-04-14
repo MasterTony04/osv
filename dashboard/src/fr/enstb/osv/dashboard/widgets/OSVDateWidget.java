@@ -26,7 +26,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -78,18 +80,22 @@ public class OSVDateWidget extends JPanel {
 		int x1 = (int) (this.getWidth() * 0.8);
 		int y1 = (int) (this.getWidth() * mw.leaf.getHeight() / mw.leaf.getWidth() * 0.8);
 
-		g.drawImage(mw.leaf.getScaledInstance(x1, y1, Image.SCALE_SMOOTH), this.getWidth() / 10, this.getHeight() / 3,
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g2d.drawImage(mw.leaf.getScaledInstance(x1, y1, Image.SCALE_SMOOTH), this.getWidth() / 10, this.getHeight() / 3,
 				x1, y1, null);
 
 		setForeground(OSVColors.WHITE);
 		float yF = y1 / 4;
-		g.setFont(font.deriveFont(yF));
+		g2d.setFont(font.deriveFont(yF));
 
 		FontMetrics fm = getFontMetrics(getFont());
 		int xF = fm.stringWidth(time.getText());
 		int xFPos = x1 / 2 + this.getWidth() / 10 - xF * 4/5;
 		int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
-		g.drawString(time.getText(), xFPos, yFPos);
+		g2d.drawString(time.getText(), xFPos, yFPos);
 	}
 
 	public class TimeChangeWathcer extends SwingWorker<Void, Void> {

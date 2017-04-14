@@ -52,6 +52,10 @@ public class MainWindow extends JFrame {
 	public final ImageIcon iconDashBright;
 	public final ImageIcon iconClose;
 	public final ImageIcon iconCloseBright;
+	public final ImageIcon iconBattery;
+	public final ImageIcon iconBatteryRed;
+	public final ImageIcon iconThermo;
+	public final ImageIcon iconThermoRed;
 	public final BufferedImage needle;
 	public final BufferedImage counter;
 	public final BufferedImage map;
@@ -75,6 +79,11 @@ public class MainWindow extends JFrame {
 		iconDashBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_dashboard_bright.png")));
 		iconClose = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close.png")));
 		iconCloseBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close_bright.png")));
+		
+		iconBattery = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_battery.png")));
+		iconBatteryRed = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_battery_red.png")));
+		iconThermo = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo.png")));
+		iconThermoRed = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo_red.png")));
 
 		needle = ImageIO.read(getClass().getResourceAsStream("/needle.png"));
 		counter = ImageIO.read(getClass().getResourceAsStream("/counter.png"));

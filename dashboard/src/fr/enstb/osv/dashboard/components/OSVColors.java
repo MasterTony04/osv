@@ -36,5 +36,8 @@ public class OSVColors {
 	public static final Color WHITE = new Color(255, 255, 255);
 	
 	public static final Color BLUE_1 = new Color(46, 209, 239);
+	
+	public static final Color RED_1 = new Color(212, 16, 16);
+	public static final Color ORANGE = new Color(212, 127, 16);
 
 }
