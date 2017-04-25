@@ -51,7 +51,7 @@ public class OSVSpeedCounter extends JPanel {
 		int xSize = mw.counter.getWidth() * ySize / mw.counter.getHeight();
 		ImageIcon sizedCounter = new ImageIcon(mw.counter.getScaledInstance(xSize, ySize, Image.SCALE_SMOOTH));
 		int x1 = (int) (getWidth() * 0.25);
-		int y1 = (int) (mw.getHeight() * 0.14);
+		int y1 = (int) (mw.getHeight() * 0.12);
 		g.drawImage(sizedCounter.getImage(), x1, y1, sizedCounter.getIconWidth(), sizedCounter.getIconHeight(), null);
 
 		ImageIcon sizedNeedle = new ImageIcon(mw.needle.getScaledInstance(xSize, ySize, Image.SCALE_SMOOTH));

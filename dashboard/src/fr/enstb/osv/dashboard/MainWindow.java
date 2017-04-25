@@ -61,7 +61,6 @@ public class MainWindow extends JFrame {
 	public final BufferedImage map;
 	public final BufferedImage chargeLightning;
 	private OSVPanel osvPanel;
-	public boolean mainPanelSected;
 
 	OSVDataWatcher dataWatcher;
 	public BufferedImage chargeLightning0;
@@ -90,7 +89,7 @@ public class MainWindow extends JFrame {
 		iconDashBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_dashboard_bright.png")));
 		iconClose = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close.png")));
 		iconCloseBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close_bright.png")));
-		
+
 		iconBattery = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_battery.png")));
 		iconBatteryRed = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_battery_red.png")));
 		iconThermo = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo.png")));
@@ -110,20 +109,19 @@ public class MainWindow extends JFrame {
 		chargeLightning8 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_8.png"));
 		chargeLightning9 = ImageIO.read(getClass().getResourceAsStream("/charge_lightning/charge_lightning_9.png"));
 
-
 		// Set up frame.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("OSV Dashboard");
 		setMinimumSize(new Dimension(640, 360));
+		setPreferredSize(new Dimension(1366, 768));
 
 		osvPanel = new OSVPanel(this);
 		getContentPane().add(osvPanel);
 
-		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		// DEBUG
-		// setUndecorated(true);
+		// setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-		mainPanelSected = true;
+		// setUndecorated(true);
 
 		addWindowStateListener(new MainWindowListener(this));
 
@@ -141,14 +139,14 @@ public class MainWindow extends JFrame {
 
 	public void setSpeed(float i) {
 		osvPanel.textWidget.setLabelText((int) i + " km/h");
-		if (mainPanelSected) {
+		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.MAIN_PANEL) {
 			osvPanel.speedCounter.setSpeed(i);
 		}
 	}
-	
+
 	public void setTemperature(int index, float value) {
-		if(osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
-			if(index < 0 || index > 3) {
+		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+			if (index < 0 || index > 3) {
 				System.err.println("Temperature index must be in [0 ; 3].");
 				return;
 			}
@@ -160,10 +158,10 @@ public class MainWindow extends JFrame {
 			}
 		}
 	}
-	
+
 	public void setCellVoltage(int index, float value) {
-		if(osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
-			if(index < 0 || index > 23) {
+		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+			if (index < 0 || index > 23) {
 				System.err.println("Cell index must be in [0 ; 23].");
 				return;
 			}
@@ -192,6 +190,12 @@ public class MainWindow extends JFrame {
 
 	public void setIsCharging(boolean b) {
 		osvPanel.batteryWidget.setIsCharging(b);
+	}
+
+	public void setTotalDistance(float distance) {
+		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+			osvPanel.getSettingsPanel().setTotalDistance(distance);
+		}
 	}
 
 }

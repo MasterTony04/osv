@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 
 import fr.enstb.osv.dashboard.widgets.OSVBatteryCellWidget;
 import fr.enstb.osv.dashboard.widgets.OSVElementStatusWidget;
+import fr.enstb.osv.dashboard.widgets.OSVTextWidget;
 import fr.enstb.osv.dashboard.widgets.OSVThermoSensorWidget;
 
 /**
@@ -48,15 +49,23 @@ public class SettingsPanel extends JPanel {
 	public List<OSVThermoSensorWidget> temperatureSensorsWidgets;
 	private OSVElementStatusWidget temperatureStatus;
 	private OSVElementStatusWidget batteryStatus;
+	private OSVTextWidget kilometersWidget;
 
 	public SettingsPanel(MainWindow mw) {
 
 		this.setOpaque(false);
+		setLayout(new BorderLayout());
 		cp = new JPanel();
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		cp.setOpaque(false);
-		verticalSpace = Box.createVerticalStrut((int) (mw.getHeight() * 0.45f));
+		verticalSpace = Box.createVerticalStrut((int) (mw.getHeight() * 0.35f));
 		cp.add(verticalSpace);
+
+		kilometersWidget = new OSVTextWidget(mw, 230, "0 km");
+		JPanel p2 = new JPanel();
+		p2.setOpaque(false);
+		p2.add(kilometersWidget);
+		cp.add(p2);
 
 		JPanel p = new JPanel();
 		p.setOpaque(false);
@@ -74,9 +83,6 @@ public class SettingsPanel extends JPanel {
 			cellsPanel.add(w);
 		}
 		cp.add(cellsPanel);
-
-		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 8);
-		cp.add(verticalSpace);
 
 		JPanel p1 = new JPanel();
 		p1.setOpaque(false);
@@ -96,16 +102,11 @@ public class SettingsPanel extends JPanel {
 		}
 		cp.add(temperaturesPanel);
 
-		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 8);
-		cp.add(verticalSpace);
-
-		add(cp, BorderLayout.CENTER);
+		JPanel p3 = new JPanel();
+		p3.setOpaque(false);
+		p3.add(cp);
+		add(p3);
 	}
-
-	// @Override
-	// protected void paintComponent(Graphics g) {
-	//// super.paintComponents(g);
-	// }
 
 	public void recalculateDimensions() {
 		for (OSVBatteryCellWidget w : batteryCellWidgets) {
@@ -125,7 +126,7 @@ public class SettingsPanel extends JPanel {
 		}
 		temperatureStatus.setStatus(true);
 	}
-	
+
 	public void setBatteryStatusWidgetColor() {
 		for (OSVBatteryCellWidget w : batteryCellWidgets) {
 			if (w.getVoltage() <= 2.8f || w.getVoltage() > 3.75f) {
@@ -134,5 +135,9 @@ public class SettingsPanel extends JPanel {
 			}
 		}
 		batteryStatus.setStatus(true);
+	}
+
+	public void setTotalDistance(float distance) {
+		kilometersWidget.setLabelText(String.format("%.2f kms", distance));
 	}
 }

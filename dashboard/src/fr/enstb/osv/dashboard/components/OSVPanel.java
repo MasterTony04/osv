@@ -86,10 +86,10 @@ public class OSVPanel extends JPanel {
 
 		leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-		verticalSpaceLeftPanel = Box.createVerticalStrut(mw.getHeight() / 2);
+		verticalSpaceLeftPanel = Box.createVerticalStrut((int) (mw.getHeight() * 0.35f));
 		leftPanel.add(verticalSpaceLeftPanel, 0);
 		leftPanel.add(new OSVDateWidget(mw), 1);
-		verticalSpaceLeftPanel2 = Box.createVerticalStrut(mw.getHeight() / 4);
+		verticalSpaceLeftPanel2 = Box.createVerticalStrut((int) (mw.getHeight() * 0.1f));
 		leftPanel.add(verticalSpaceLeftPanel2, 2);
 		for (OSVToggleButton b : screensButtons) {
 			JPanel p = new JPanel();
@@ -122,6 +122,8 @@ public class OSVPanel extends JPanel {
 		bottomPanel.add(textWidget);
 		bp3 = new JPanel();
 		bp3.setOpaque(false);
+		bp3.setLayout(new BoxLayout(bp3, BoxLayout.Y_AXIS));
+		bp3.add(Box.createVerticalStrut(100));
 		bottomPanel.add(bp3);
 		this.add(bottomPanel, BorderLayout.SOUTH);
 

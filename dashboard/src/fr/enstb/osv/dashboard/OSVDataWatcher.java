@@ -32,11 +32,10 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingWorker;
-
-
 
 /**
  * @author guillaumelg
@@ -47,6 +46,9 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 	public static final String speedFile = "/tmp/osvdatasimulator/speed";
 	public static final String socFile = "/tmp/osvdatasimulator/soc";
 	public static final String isChargingFile = "/tmp/osvdatasimulator/is_charging";
+	public static final String temperatureFile = "/tmp/osvdatasimulator/temperature_";
+	public static final String cellVoltageFile = "/tmp/osvdatasimulator/cell_voltage_";
+	private static final String totalDistanceFile = "/tmp/osvdatasimulator/total_distance";
 
 	private MainWindow mw;
 
@@ -58,60 +60,79 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 	protected Void doInBackground() throws Exception {
 
 		System.out.println("Watcher starting");
-		
+
 		while (!(new File("/tmp/osvdatasimulator")).isDirectory()) {
 			Thread.sleep(1000);
 		}
-		
+
 		System.out.println("Watcher ready");
 
 		WatchService watchService = FileSystems.getDefault().newWatchService();
 		Path directory = Paths.get("/tmp/osvdatasimulator");
 		directory.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
 		WatchKey key = null;
-		
-		String sSpeed = null, sSoc = null;
-		
-		while(true) {
+
+		while (true) {
 			key = watchService.take();
 			if (key != null) {
 				List<WatchEvent<?>> eventList = key.pollEvents();
 
 				for (int i = 0; i < eventList.size(); i++) {
-
-					if (eventList.get(i).context().toString().equals("speed")) {
-						
-						sSpeed = readFirstLineInFile(speedFile);
-						if (sSpeed != null) {
-							publish("sp" + sSpeed);
-						}
-					} else if (eventList.get(i).context().toString().equals("soc")) {
-						sSoc =  readFirstLineInFile(socFile);
-						if (sSoc != null) {
-							publish("so" + sSoc);
-						}
-					} else if (eventList.get(i).context().toString().equals("is_charging")) {
-						sSoc = readFirstLineInFile(isChargingFile);
-						if (sSoc.startsWith("1")) {
-							publish("ch1");
-						} else {
-							publish("ch0");
-						}
-					} 
+					publish(eventList.get(i).context().toString());
 				}
+
+				key.reset();
 			}
-			key.reset();
 		}
 	}
-	
+
 	public void process(List<String> data) {
-		for(String s : data) {
-			if(s.startsWith("sp")) {
-				mw.setSpeed(Float.parseFloat(s.substring(2)));
-			} else if (s.startsWith("so")) {
-				mw.setSoc(Float.parseFloat(s.substring(2)) / 100);
-			} else if (s.startsWith("ch")) {
-				mw.setIsCharging(Integer.parseInt(s.substring(2)) == 1);
+		List<String> deduplicateEventList = new ArrayList<String>();
+		for (String s : data) {
+			if (!deduplicateEventList.contains(s)) {
+				deduplicateEventList.add(s);
+			}
+		}
+
+		String sData;
+
+		for (String s : deduplicateEventList) {
+
+			if (s.equals("speed")) {
+				sData = readFirstLineInFile(speedFile);
+				if (sData != null) {
+					mw.setSpeed(Float.parseFloat(sData));
+				}
+			} else if (s.equals("soc")) {
+				sData = readFirstLineInFile(socFile);
+				if (sData != null) {
+					mw.setSoc(Float.parseFloat(sData) / 100);
+				}
+			} else if (s.equals("is_charging")) {
+				sData = readFirstLineInFile(isChargingFile);
+				if (sData != null) {
+					mw.setIsCharging(sData.startsWith("1"));
+				}
+			} else if (s.equals("total_distance")) {
+				sData = readFirstLineInFile(totalDistanceFile);
+				if (sData != null) {
+					mw.setTotalDistance(Float.parseFloat(sData));
+				}
+			} else if (s.startsWith("temperature_")) {
+				String tempSensorNumber = s.substring(12);
+				sData = readFirstLineInFile(temperatureFile + tempSensorNumber);
+				if (sData != null) {
+					mw.setTemperature(Integer.parseInt(tempSensorNumber), Float.parseFloat(sData));
+				}
+			} else if (s.startsWith("cell_voltage_")) {
+				String cellNumber = s.substring(13);
+				sData = readFirstLineInFile(cellVoltageFile + cellNumber);
+				if (sData != null) {
+					try {
+						mw.setCellVoltage(Integer.parseInt(cellNumber), Float.parseFloat(sData));
+					} catch (NumberFormatException e) {
+					}
+				}
 			}
 		}
 	}
@@ -129,10 +150,10 @@ public class OSVDataWatcher extends SwingWorker<Void, String> {
 	}
 
 	public void init() {
-		if((new File(socFile)).exists()) {
+		if ((new File(socFile)).exists()) {
 			mw.setSoc(Float.parseFloat(readFirstLineInFile(socFile)) / 100);
 		}
-		if((new File(speedFile)).exists()) {
+		if ((new File(speedFile)).exists()) {
 			mw.setSpeed(Float.parseFloat(readFirstLineInFile(speedFile)));
 		}
 	}

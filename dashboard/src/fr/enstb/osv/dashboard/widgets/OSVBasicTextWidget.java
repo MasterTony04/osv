@@ -42,9 +42,9 @@ import fr.enstb.osv.dashboard.components.OSVColors;
 public class OSVBasicTextWidget extends JPanel {
 
 	private static final long serialVersionUID = -4089580648619011563L;
-	private MainWindow mw;
-	private JLabel text;
-	private final Font font;
+	protected MainWindow mw;
+	protected JLabel text;
+	protected final Font font;
 
 	public OSVBasicTextWidget(MainWindow mw) {
 		this.mw = mw;
@@ -68,6 +68,10 @@ public class OSVBasicTextWidget extends JPanel {
 	protected void paintComponent(Graphics g) {
 		setOurWidth();
 
+		genericOSVTextComponentPainter(g);
+	}
+
+	protected final void genericOSVTextComponentPainter(Graphics g) {
 		int x1 = this.getWidth(); // (int) (((float) this.getWidth()) * 0.2);
 		int y1 = (int) (((float) this.getHeight()) * 0.8);
 		int xOff = 0; // (int) (((float) this.getWidth()) * 0.4);
