@@ -63,7 +63,7 @@ public class OSVThermoSensorWidget extends JPanel {
 
 	public void calculateWidth() {
 		int width = (int) (mw.getWidth() * 0.08);
-		int height = (int) (width * 1.25f);
+		int height = (int) (width * 0.9f);
 		setMinimumSize(new Dimension(width, height));
 		setPreferredSize(new Dimension(width, height));
 	}
@@ -92,14 +92,12 @@ public class OSVThermoSensorWidget extends JPanel {
 		FontMetrics fm = getFontMetrics(g2d.getFont());
 		int xF = fm.stringWidth(temperatureL.getText());
 		int xFPos = offX + width / 3 - xF / 2;
-		// int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 2;
-		// int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		int yFPos = (int) (offY + height / 2 + yF / 2) - 2;
 		g2d.drawString(temperatureL.getText(), xFPos, yFPos);
 
-		// // TODO Draw temperature gauge
+		// Draw temperature gauge
 		float gWidth = width / 6f;
-		float gHeight = width * 1f;
+		float gHeight = height * 0.9f;
 		float xC = xF + xFPos + offX;
 		float yC = (height - gHeight) / 2f + offY;
 

@@ -22,15 +22,14 @@
 package fr.enstb.osv.dashboard;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import fr.enstb.osv.dashboard.components.OSVEmptyPanel;
 import fr.enstb.osv.dashboard.widgets.OSVBatteryCellWidget;
 import fr.enstb.osv.dashboard.widgets.OSVElementStatusWidget;
 import fr.enstb.osv.dashboard.widgets.OSVTextWidget;
@@ -44,7 +43,7 @@ public class SettingsPanel extends JPanel {
 
 	private static final long serialVersionUID = -1052555126335479979L;
 	private JPanel cp;
-	private Component verticalSpace;
+	private OSVEmptyPanel verticalSpace;
 	public List<OSVBatteryCellWidget> batteryCellWidgets;
 	public List<OSVThermoSensorWidget> temperatureSensorsWidgets;
 	private OSVElementStatusWidget temperatureStatus;
@@ -58,7 +57,8 @@ public class SettingsPanel extends JPanel {
 		cp = new JPanel();
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		cp.setOpaque(false);
-		verticalSpace = Box.createVerticalStrut((int) (mw.getHeight() * 0.35f));
+//		verticalSpace = Box.createVerticalStrut((int) (mw.getHeight() * 0.35f));
+		verticalSpace = new OSVEmptyPanel(mw, 0, 0.13f);
 		cp.add(verticalSpace);
 
 		kilometersWidget = new OSVTextWidget(mw, 230, "0 km");
@@ -109,6 +109,9 @@ public class SettingsPanel extends JPanel {
 	}
 
 	public void recalculateDimensions() {
+		verticalSpace.calculateDimensions();
+		temperatureStatus.calculateWidth();
+		batteryStatus.calculateWidth();
 		for (OSVBatteryCellWidget w : batteryCellWidgets) {
 			w.calculateWidth();
 		}

@@ -45,13 +45,13 @@ public class App {
 					mw.dataWatcher.init();
 					mw.dataWatcher.execute();
 					
-					SwingUtilities.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							mw.pack();
-							mw.repaint();
-						}
-					});
+//					SwingUtilities.invokeLater(new Runnable() {
+//						@Override
+//						public void run() {
+//							mw.pack();
+//							mw.repaint();
+//						}
+//					});
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

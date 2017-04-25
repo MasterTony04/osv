@@ -58,7 +58,7 @@ public class OSVSpeedCounter extends JPanel {
 		((Graphics2D) g).translate(x1, y1);
 		drawNeedle((Graphics2D) g, sizedNeedle);
 	}
-	
+
 	private void drawNeedle(Graphics2D g2d, ImageIcon needle) {
 		if (needle != null) {
 			AffineTransform trans = new AffineTransform();
@@ -70,11 +70,10 @@ public class OSVSpeedCounter extends JPanel {
 	}
 
 	public void setSpeed(float speed) {
-		if(this.speed == speed) {
+		if (this.speed == speed) {
 			return;
 		}
 		this.speed = speed;
 		repaint();
 	}
-
 }

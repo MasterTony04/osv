@@ -23,6 +23,8 @@
 package fr.enstb.osv.dashboard;
 
 import java.awt.Dimension;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import java.awt.image.BufferedImage;
@@ -52,10 +54,10 @@ public class MainWindow extends JFrame {
 	public final ImageIcon iconDashBright;
 	public final ImageIcon iconClose;
 	public final ImageIcon iconCloseBright;
-	public final ImageIcon iconBattery;
-	public final ImageIcon iconBatteryRed;
-	public final ImageIcon iconThermo;
-	public final ImageIcon iconThermoRed;
+	public final BufferedImage iconBattery;
+	public final BufferedImage iconBatteryRed;
+	public final BufferedImage iconThermo;
+	public final BufferedImage iconThermoRed;
 	public final BufferedImage needle;
 	public final BufferedImage counter;
 	public final BufferedImage map;
@@ -90,10 +92,10 @@ public class MainWindow extends JFrame {
 		iconClose = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close.png")));
 		iconCloseBright = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_close_bright.png")));
 
-		iconBattery = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_battery.png")));
-		iconBatteryRed = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_battery_red.png")));
-		iconThermo = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo.png")));
-		iconThermoRed = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo_red.png")));
+		iconBattery = ImageIO.read(getClass().getResourceAsStream("/picto/p_battery.png"));
+		iconBatteryRed = ImageIO.read(getClass().getResourceAsStream("/picto/p_battery_red.png"));
+		iconThermo = ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo.png"));
+		iconThermoRed = ImageIO.read(getClass().getResourceAsStream("/picto/p_thermo_red.png"));
 
 		needle = ImageIO.read(getClass().getResourceAsStream("/needle.png"));
 		counter = ImageIO.read(getClass().getResourceAsStream("/counter.png"));
@@ -113,17 +115,18 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("OSV Dashboard");
 		setMinimumSize(new Dimension(640, 360));
-		setPreferredSize(new Dimension(1366, 768));
+		// DEBUG
+		// setPreferredSize(new Dimension(1366, 768));
 
 		osvPanel = new OSVPanel(this);
 		getContentPane().add(osvPanel);
 
-		// DEBUG
-		// setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-
+		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		// setUndecorated(true);
 
-		addWindowStateListener(new MainWindowListener(this));
+		MainWindowListener mwl = new MainWindowListener(this);
+		addWindowStateListener(mwl);
+		addComponentListener(mwl);
 
 		pack();
 		setVisible(true);
@@ -174,7 +177,7 @@ public class MainWindow extends JFrame {
 		}
 	}
 
-	private class MainWindowListener implements WindowStateListener {
+	private class MainWindowListener implements WindowStateListener, ComponentListener {
 		private MainWindow mw;
 
 		public MainWindowListener(MainWindow mw) {
@@ -183,8 +186,34 @@ public class MainWindow extends JFrame {
 
 		@Override
 		public void windowStateChanged(WindowEvent e) {
-			mw.revalidate();
-			mw.repaint();
+			componentResized(null);
+		}
+
+		@Override
+		public void componentResized(ComponentEvent e) {
+			switch (mw.osvPanel.selectedPanel) {
+			case MAIN_PANEL:
+				mw.osvPanel.switchToSpeedCounter();
+				break;
+			case MAP_PANEL:
+				mw.osvPanel.switchToMap();
+				break;
+			case SETTINGS_PANEL:
+				mw.osvPanel.switchToSettings();
+				break;
+			}
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
- * OSVBasicTextWidget.java
+ * OSVEmptyPanel.java
  *
  *
  * Copyright 2017 Institut Mines-Télécom
@@ -19,46 +19,45 @@
  * You should have received a copy of the GNU General Public License
  * along with tb-osv-dashboard. If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.enstb.osv.dashboard.widgets;
+package fr.enstb.osv.dashboard.components;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Graphics;
 
+import javax.swing.JPanel;
 import fr.enstb.osv.dashboard.MainWindow;
 
 /**
  * @author guillaumelg
  *
  */
-public class OSVTextWidget extends OSVBasicTextWidget {
+public class OSVEmptyPanel extends JPanel {
 
-	private static final long serialVersionUID = 5877777051772979699L;
-	private int preferredWidth;
+	private static final long serialVersionUID = -7702630822196955563L;
+	private MainWindow mw;
+	private float yCoeff;
+	private float xCoeff;
 
-	public OSVTextWidget(MainWindow mw, int width) {
-		super(mw);
-		this.preferredWidth = width;
-		setOurWidth();
+	public OSVEmptyPanel(MainWindow mw, float xCoeff, float yCoeff) {
+		this.mw = mw;
+		this.xCoeff = xCoeff;
+		this.yCoeff = yCoeff;
+		calculateDimensions();
+		setOpaque(false);
 	}
 
-	public OSVTextWidget(MainWindow mw, int width, String text) {
-		super(mw);
-		this.preferredWidth = width;
-		setOurWidth();
-
-		setLabelText(text);
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		setOurWidth();
-
-		genericOSVTextComponentPainter(g);
-	}
-
-	private void setOurWidth() {
-		setMinimumSize(new Dimension(preferredWidth, preferredWidth / 4));
-		setPreferredSize(new Dimension(preferredWidth, preferredWidth / 4));
+	public void calculateDimensions() {
+		int width, height;
+		if (xCoeff > 0) {
+			width = (int) (mw.getWidth() * xCoeff);
+		} else {
+			width = 1;
+		}
+		if (yCoeff > 0) {
+			height = (int) (mw.getHeight() * yCoeff);
+		} else {
+			height = 1;
+		}
+		setMinimumSize(new Dimension(width, height));
+		setPreferredSize(new Dimension(width, height));
 	}
 }

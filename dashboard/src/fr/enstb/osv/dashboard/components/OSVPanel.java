@@ -197,7 +197,8 @@ public class OSVPanel extends JPanel {
 				mw.getWidth(), mw.getHeight(), null);
 	}
 
-	private void switchToSpeedCounter() {
+	public void switchToSpeedCounter() {
+		remove(speedCounter);
 		remove(mapPanel);
 		remove(settingsPanel);
 		add(speedCounter, BorderLayout.CENTER);
@@ -206,8 +207,9 @@ public class OSVPanel extends JPanel {
 		repaint();
 	}
 
-	private void switchToMap() {
+	public void switchToMap() {
 		remove(speedCounter);
+		remove(mapPanel);
 		remove(settingsPanel);
 		add(mapPanel, BorderLayout.CENTER);
 		bp1.remove(exitButton);
@@ -215,9 +217,10 @@ public class OSVPanel extends JPanel {
 		repaint();
 	}
 
-	private void switchToSettings() {
+	public void switchToSettings() {
 		remove(speedCounter);
 		remove(mapPanel);
+		remove(settingsPanel);
 		add(settingsPanel, BorderLayout.CENTER);
 		settingsPanel.recalculateDimensions();
 		bp1.add(exitButton);
