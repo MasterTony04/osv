@@ -23,8 +23,6 @@ public class OSVElementStatusWidget extends JPanel {
 	public OSVElementStatusWidget(MainWindow mw, Image icon, Image iconRed) {
 		this.mw = mw;
 		statusOK = false;
-//		setMinimumSize(new Dimension(128, 93));
-//		setPreferredSize(new Dimension(128, 93));
 		this.icon = icon;
 		this.iconRed = iconRed;
 		calculateWidth();
@@ -61,19 +59,13 @@ public class OSVElementStatusWidget extends JPanel {
 			Image ico;
 			if (statusOK) {
 				ico = icon;
-//				icon.paintIcon(this, g2d, (getWidth() - icon.getIconWidth()) / 2,
-//						(getHeight() - icon.getIconHeight()) / 2);
 			} else {
 				ico = iconRed;
-//				iconRed.paintIcon(this, g2d, (getWidth() - iconRed.getIconWidth()) / 2,
-//						(getHeight() - iconRed.getIconHeight()) / 2);
 			}
 			
 			int ySize = (int) (getParent().getHeight() * 0.8);
 			int xSize = ico.getWidth(null) * ySize / ico.getHeight(null);
 			ImageIcon sizedIcon = new ImageIcon(ico.getScaledInstance(xSize, ySize, Image.SCALE_SMOOTH));
-//			int x1 = (int) (x * 0.1);
-//			int y1 = (int) (y * 0.1);
 			int x1 = (x - xSize) / 2;
 			int y1 = (y - ySize) / 2;
 			g2d.drawImage(sizedIcon.getImage(), x1, y1, sizedIcon.getIconWidth(), sizedIcon.getIconHeight(), null);

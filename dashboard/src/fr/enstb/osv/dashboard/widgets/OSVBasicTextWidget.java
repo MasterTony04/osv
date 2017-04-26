@@ -72,9 +72,9 @@ public class OSVBasicTextWidget extends JPanel {
 	}
 
 	protected final void genericOSVTextComponentPainter(Graphics g) {
-		int x1 = this.getWidth(); // (int) (((float) this.getWidth()) * 0.2);
+		int x1 = this.getWidth();
 		int y1 = (int) (((float) this.getHeight()) * 0.8);
-		int xOff = 0; // (int) (((float) this.getWidth()) * 0.4);
+		int xOff = 0;
 		int yOff = (int) (((float) this.getHeight()) * 0.1);
 
 		Graphics2D g2d = (Graphics2D) g;

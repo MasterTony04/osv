@@ -57,7 +57,6 @@ public class SettingsPanel extends JPanel {
 		cp = new JPanel();
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		cp.setOpaque(false);
-//		verticalSpace = Box.createVerticalStrut((int) (mw.getHeight() * 0.35f));
 		verticalSpace = new OSVEmptyPanel(mw, 0, 0.13f);
 		cp.add(verticalSpace);
 

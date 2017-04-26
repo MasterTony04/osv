@@ -95,8 +95,6 @@ public class OSVBatteryCellWidget extends JPanel {
 		FontMetrics fm = getFontMetrics(g2d.getFont());
 		int xF = fm.stringWidth(voltageL.getText());
 		int xFPos = offX + width / 3 - xF / 2;
-		// int xFPos = x1 / 2 + this.getWidth() / 10 - xF / 2;
-		// int yFPos = (int) (this.getHeight() / 3 + y1 / 2 + yF / 4);
 		int yFPos = (int) (offY + height / 2 + yF / 2) - 2;
 		g2d.drawString(voltageL.getText(), xFPos, yFPos);
 

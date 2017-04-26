@@ -31,12 +31,12 @@ import javax.swing.SwingUtilities;
  *
  */
 public class App {
-	
+
 	private static MainWindow mw = null;
-	
+
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-			// Override
+			@Override
 			public void run() {
 				try {
 					mw = new MainWindow();
@@ -44,22 +44,14 @@ public class App {
 					mw.dataWatcher = new OSVDataWatcher(mw);
 					mw.dataWatcher.init();
 					mw.dataWatcher.execute();
-					
-//					SwingUtilities.invokeLater(new Runnable() {
-//						@Override
-//						public void run() {
-//							mw.pack();
-//							mw.repaint();
-//						}
-//					});
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-	
-	public static MainWindow getMainWindow()  {
+
+	public static MainWindow getMainWindow() {
 		return mw;
 	}
 

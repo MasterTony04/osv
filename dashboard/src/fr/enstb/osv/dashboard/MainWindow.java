@@ -34,8 +34,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import fr.enstb.osv.dashboard.components.OSVPanel;
-import fr.enstb.osv.dashboard.components.OSVPanel.ENUM_OSV_PANEL;
+import fr.enstb.osv.dashboard.OSVPanel.ENUM_OSV_PANEL;
 
 /**
  * @author guillaumelg
@@ -75,6 +74,7 @@ public class MainWindow extends JFrame {
 	public BufferedImage chargeLightning7;
 	public BufferedImage chargeLightning8;
 	public BufferedImage chargeLightning9;
+	private float evSpeed = 0.0f;
 
 	public MainWindow() throws IOException {
 		// load images
@@ -116,12 +116,12 @@ public class MainWindow extends JFrame {
 		setTitle("OSV Dashboard");
 		setMinimumSize(new Dimension(640, 360));
 		// DEBUG
-		// setPreferredSize(new Dimension(1366, 768));
+		 setPreferredSize(new Dimension(1366, 768));
 
 		osvPanel = new OSVPanel(this);
 		getContentPane().add(osvPanel);
 
-		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+//		setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		// setUndecorated(true);
 
 		MainWindowListener mwl = new MainWindowListener(this);
@@ -141,6 +141,7 @@ public class MainWindow extends JFrame {
 	}
 
 	public void setSpeed(float i) {
+		this.evSpeed  = i;
 		osvPanel.textWidget.setLabelText((int) i + " km/h");
 		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.MAIN_PANEL) {
 			osvPanel.speedCounter.setSpeed(i);
@@ -148,7 +149,7 @@ public class MainWindow extends JFrame {
 	}
 
 	public void setTemperature(int index, float value) {
-		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+//		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
 			if (index < 0 || index > 3) {
 				System.err.println("Temperature index must be in [0 ; 3].");
 				return;
@@ -159,11 +160,11 @@ public class MainWindow extends JFrame {
 			} catch (OSVException e) {
 				System.err.println(e.toString());
 			}
-		}
+//		}
 	}
 
 	public void setCellVoltage(int index, float value) {
-		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+//		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
 			if (index < 0 || index > 23) {
 				System.err.println("Cell index must be in [0 ; 23].");
 				return;
@@ -174,7 +175,7 @@ public class MainWindow extends JFrame {
 			} catch (OSVException e) {
 				System.err.println(e.toString());
 			}
-		}
+//		}
 	}
 
 	private class MainWindowListener implements WindowStateListener, ComponentListener {
@@ -222,9 +223,13 @@ public class MainWindow extends JFrame {
 	}
 
 	public void setTotalDistance(float distance) {
-		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
+//		if (osvPanel.selectedPanel == ENUM_OSV_PANEL.SETTINGS_PANEL) {
 			osvPanel.getSettingsPanel().setTotalDistance(distance);
-		}
+//		}
+	}
+
+	public float getEVSpeed() {
+		return this.evSpeed;
 	}
 
 }

@@ -84,7 +84,6 @@ public class OSVThermoSensorWidget extends JPanel {
 		int height = y * 8 / 10;
 		g2d.fillRect(offX, offY, width, height);
 
-		// setForeground(Color.BLUE);
 		g2d.setColor(OSVColors.GREY_3);
 		float yF = width / 6;
 		g2d.setFont(font.deriveFont(yF));
@@ -112,9 +111,9 @@ public class OSVThermoSensorWidget extends JPanel {
 		if (temperature > 0) {
 			float glHeight;
 			if (temperature >= 60) {
-				glHeight = width;
+				glHeight = gHeight;
 			} else {
-				glHeight = width * temperature / 60f;
+				glHeight = gHeight * temperature / 60f;
 			}
 			float ylC = yC + gHeight - glHeight;
 			g2d.fillRoundRect((int) xC, (int) ylC, (int) gWidth, (int) glHeight, 15, 15);

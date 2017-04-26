@@ -20,7 +20,7 @@
  * along with tb-osv-dashboard. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.enstb.osv.dashboard.components;
+package fr.enstb.osv.dashboard;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -36,9 +36,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import fr.enstb.osv.dashboard.MainWindow;
-import fr.enstb.osv.dashboard.MapPanel;
-import fr.enstb.osv.dashboard.SettingsPanel;
+import fr.enstb.osv.dashboard.components.OSVButton;
+import fr.enstb.osv.dashboard.components.OSVToggleButton;
 import fr.enstb.osv.dashboard.widgets.OSVBasicTextWidget;
 import fr.enstb.osv.dashboard.widgets.OSVBatteryWidget;
 import fr.enstb.osv.dashboard.widgets.OSVDateWidget;
@@ -114,7 +113,6 @@ public class OSVPanel extends JPanel {
 		});
 		bp1 = new JPanel();
 		bp1.setOpaque(false);
-		// bp1.add(exit);
 		bottomPanel.add(bp1);
 		bottomPanel.setOpaque(false);
 
@@ -143,7 +141,7 @@ public class OSVPanel extends JPanel {
 		mainB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (screensButtons.get(0).isSelected) {
+				if (screensButtons.get(0).isButtonSelected()) {
 					return;
 				}
 				mainB.makeSelected(true);
@@ -158,7 +156,7 @@ public class OSVPanel extends JPanel {
 		mapB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (screensButtons.get(1).isSelected) {
+				if (screensButtons.get(1).isButtonSelected()) {
 					return;
 				}
 				mainB.makeSelected(false);
@@ -173,7 +171,7 @@ public class OSVPanel extends JPanel {
 		settingsB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (screensButtons.get(2).isSelected) {
+				if (screensButtons.get(2).isButtonSelected()) {
 					return;
 				}
 				mainB.makeSelected(false);
@@ -205,6 +203,7 @@ public class OSVPanel extends JPanel {
 		bp1.remove(exitButton);
 		revalidate();
 		repaint();
+		mw.setSpeed(mw.getEVSpeed());
 	}
 
 	public void switchToMap() {
@@ -212,6 +211,7 @@ public class OSVPanel extends JPanel {
 		remove(mapPanel);
 		remove(settingsPanel);
 		add(mapPanel, BorderLayout.CENTER);
+		mapPanel.recalculateDimensions();
 		bp1.remove(exitButton);
 		revalidate();
 		repaint();

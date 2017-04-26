@@ -21,15 +21,15 @@
  */
 package fr.enstb.osv.dashboard;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import fr.enstb.osv.dashboard.components.OSVEmptyPanel;
 
 /**
  * @author guillaumelg
@@ -39,33 +39,34 @@ public class MapPanel extends JPanel {
 
 	private static final long serialVersionUID = -1052555126335479979L;
 	private JPanel cp;
-	private Component verticalSpace;
+	private OSVEmptyPanel verticalSpace;
 	private MainWindow mw;
+	MapDisplay mapDisplay;
 
 	public MapPanel(MainWindow mw) {
 
 		this.mw = mw;
 		this.setOpaque(false);
-		
+
 		cp = new JPanel();
 		cp.setLayout(new BoxLayout(cp, BoxLayout.Y_AXIS));
 		cp.setOpaque(false);
-		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 4);
+		verticalSpace = new OSVEmptyPanel(mw, 0, 0.28f);
 		cp.add(verticalSpace);
 
-		
-		
-		JPanel cp1 = new MapDisplay();
-		cp1.setOpaque(false);
-		
-//		cp1.add(new ImageIcon(mw.map));
-		
-		cp.add(cp1);
-		
-//		add(cp1, BorderLayout.CENTER);
+		mapDisplay = new MapDisplay();
+		mapDisplay.setOpaque(false);
+
+		cp.add(mapDisplay);
+
 		add(cp);
 	}
-	
+
+	public void recalculateDimensions() {
+		verticalSpace.calculateDimensions();
+		mapDisplay.calculateWidth();
+	}
+
 	class MapDisplay extends JPanel {
 
 		private static final long serialVersionUID = 2162625690520903862L;
@@ -73,26 +74,28 @@ public class MapPanel extends JPanel {
 		public MapDisplay() {
 			setPreferredSize(new Dimension(mw.map.getWidth(), mw.map.getHeight()));
 		}
-		
+
+		public void calculateWidth() {
+			int width = (int) (mw.getWidth() * 0.5);
+			int height = (int) (mw.map.getHeight() * width / mw.map.getWidth());
+			setMinimumSize(new Dimension(width, height));
+			setPreferredSize(new Dimension(width, height));
+		}
+
 		@Override
 		protected void paintComponent(Graphics g) {
-			int ySize = (int) (getParent().getHeight() * 0.6);
-			int xSize = mw.map.getWidth() * ySize / mw.map.getHeight();
-			ImageIcon sizedMap = new ImageIcon(mw.map.getScaledInstance(xSize, ySize, Image.SCALE_SMOOTH));
-			int x1 = (int) (getWidth() * 0.25);
-			int y1 = (int) (mw.getHeight() * 0.14);
-			g.drawImage(sizedMap.getImage(), x1, y1, sizedMap.getIconWidth(), sizedMap.getIconHeight(), null);
+			calculateWidth();
+
+			Graphics2D g2d = (Graphics2D) g;
+
+			int x = (int) (getWidth() * 0.8f);
+			int y = (int) (getHeight() * 0.8f);
+
+			Image sizedMap = mw.map.getScaledInstance(x, y, Image.SCALE_SMOOTH);
+			
+			int x1 = (int) (getWidth() * 0.167f);
+			
+			g2d.drawImage(sizedMap, x1, 0, x, y, null);
 		}
 	}
-	
-//	@Override
-//	protected void paintComponent(Graphics g) {
-//		
-////		cp.remove(verticalSpace);
-////		verticalSpace = Box.createVerticalStrut(mw.getHeight() / 4);
-////		cp.add(verticalSpace, 0);
-//		
-//		super.paintComponents(g);
-//	}
-
 }

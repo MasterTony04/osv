@@ -57,10 +57,6 @@ public class OSVDateWidget extends JPanel {
 		time.setForeground(Color.white);
 		time.setFont(new Font(time.getFont().getName(), Font.PLAIN, 64));
 		font = getFont();
-		// setMinimumSize(new Dimension(mw.leaf.getWidth(),
-		// mw.leaf.getHeight()));
-		// setPreferredSize(new Dimension(mw.leaf.getWidth(),
-		// mw.leaf.getHeight()));
 
 		setOurWidth();
 

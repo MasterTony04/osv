@@ -42,7 +42,6 @@ public class OSVToggleButton extends OSVButton {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				isPressed = false;
-//				isSelected = isSelected ? false : true;
 			}
 
 			@Override

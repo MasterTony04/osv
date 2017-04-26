@@ -21,10 +21,8 @@
  */
 package fr.enstb.osv.dashboard.widgets;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import fr.enstb.osv.dashboard.MainWindow;
 
 /**
